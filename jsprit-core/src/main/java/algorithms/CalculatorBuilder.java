@@ -184,7 +184,7 @@ class CalculatorBuilder {
 		JobInsertionCalculator baseCalculator = null;
 		CalculatorPlusListeners standardLocal = null;
 		if(local){
-			standardLocal = createStandardLocal(vrp, states);
+			standardLocal = createStandardLocal(vrp, states, insertionListeners);
 		}
 		else{
 			standardLocal = createStandardRoute(vrp, states,forwardLooking,memory);
@@ -216,10 +216,11 @@ class CalculatorBuilder {
 		}
 	}
 
-	private CalculatorPlusListeners createStandardLocal(VehicleRoutingProblem vrp, StateManager statesManager){
+	private CalculatorPlusListeners createStandardLocal(VehicleRoutingProblem vrp, StateManager statesManager, List<InsertionListener> insertionListeners){
 		if(constraintManager == null) throw new IllegalStateException("constraint-manager is null");
  		
-		MarginalsCalculus defaultCalc = new MarginalsCalculusTriangleInequality(vrp.getTransportCosts(), vrp.getActivityCosts(), constraintManager);
+		MarginalsCalculusTriangleInequality defaultCalc = new MarginalsCalculusTriangleInequality(vrp.getTransportCosts(), vrp.getActivityCosts(), constraintManager);
+		insertionListeners.add(defaultCalc);
 		JobInsertionCalculator standardServiceInsertion = new CalculatesServiceInsertion(vrp.getTransportCosts(), defaultCalc, constraintManager);
 		
 		((CalculatesServiceInsertion) standardServiceInsertion).setNeighborhood(vrp.getNeighborhood());
