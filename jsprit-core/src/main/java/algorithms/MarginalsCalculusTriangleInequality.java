@@ -24,7 +24,12 @@ import java.util.Collection;
 
 import algorithms.HardConstraints.HardActivityLevelConstraint;
 import basics.Job;
+import basics.VehicleRoutingAlgorithm;
+import basics.VehicleRoutingProblem;
+import basics.VehicleRoutingProblemSolution;
+import basics.algo.AlgorithmStartsListener;
 import basics.algo.InsertionStartsListener;
+import basics.algo.IterationStartsListener;
 import basics.algo.JobInsertedListener;
 import basics.costs.VehicleRoutingActivityCosts;
 import basics.costs.VehicleRoutingTransportCosts;
@@ -33,7 +38,7 @@ import basics.route.VehicleRoute;
 
 
 
-class MarginalsCalculusTriangleInequality implements MarginalsCalculus, InsertionStartsListener, JobInsertedListener{
+class MarginalsCalculusTriangleInequality implements MarginalsCalculus, InsertionStartsListener, JobInsertedListener, IterationStartsListener, AlgorithmStartsListener{
 
 	private HardActivityLevelConstraint hardConstraint;
 
@@ -43,11 +48,15 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 	
 	private double solutionCompletenessRatio = 1.0;
 	
-	private double weightOfWaitingTimes = 0.0;
+	private double weightOfWaitingTimes = 0.3;
 	
 	private int nuOfCustomersToRecreate;
 	
 	private int nuOfCustomers = 100;
+	
+	private int nuOfIterations;
+	
+	private double algorithmCompletenessRatio = 1.0;
 	
 	public MarginalsCalculusTriangleInequality(VehicleRoutingTransportCosts routingCosts, VehicleRoutingActivityCosts actCosts, HardActivityLevelConstraint hardActivityLevelConstraint) {
 		super();
@@ -74,6 +83,8 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 			return null;
 		}
 		
+		double weightOfActCosts = solutionCompletenessRatio*weightOfWaitingTimes*algorithmCompletenessRatio;
+		
 		double tp_costs_prevAct_newAct = routingCosts.getTransportCost(prevAct.getLocationId(), newAct.getLocationId(), depTimeAtPrevAct, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		double tp_time_prevAct_newAct = routingCosts.getTransportTime(prevAct.getLocationId(), newAct.getLocationId(), depTimeAtPrevAct, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		
@@ -81,14 +92,14 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 		
 		double newAct_endTime = CalcUtils.getActivityEndTime(newAct_arrTime, newAct);
 		
-		double act_costs_newAct = solutionCompletenessRatio*weightOfWaitingTimes*activityCosts.getActivityCost(newAct, newAct_arrTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
+		double act_costs_newAct = weightOfActCosts*activityCosts.getActivityCost(newAct, newAct_arrTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		
 		double tp_costs_newAct_nextAct = routingCosts.getTransportCost(newAct.getLocationId(), nextAct.getLocationId(), newAct_endTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		double tp_time_newAct_nextAct = routingCosts.getTransportTime(newAct.getLocationId(), nextAct.getLocationId(), newAct_endTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		
 		double nextAct_arrTime = newAct_endTime + tp_time_newAct_nextAct;
 				
-		double act_costs_nextAct = solutionCompletenessRatio*weightOfWaitingTimes*activityCosts.getActivityCost(nextAct, nextAct_arrTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
+		double act_costs_nextAct = weightOfActCosts*activityCosts.getActivityCost(nextAct, nextAct_arrTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		
 		double totalCosts = tp_costs_prevAct_newAct + tp_costs_newAct_nextAct + act_costs_newAct + act_costs_nextAct; 
 		
@@ -102,7 +113,7 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 			double tp_costs_prevAct_nextAct = routingCosts.getTransportCost(prevAct.getLocationId(), nextAct.getLocationId(), prevAct.getEndTime(), iFacts.getRoute().getDriver(), iFacts.getRoute().getVehicle());
 			double arrTime_nextAct = routingCosts.getTransportTime(prevAct.getLocationId(), nextAct.getLocationId(), prevAct.getEndTime(), iFacts.getNewDriver(), iFacts.getNewVehicle());
 			
-			double actCost_nextAct = solutionCompletenessRatio*weightOfWaitingTimes*activityCosts.getActivityCost(nextAct, arrTime_nextAct, iFacts.getRoute().getDriver(), iFacts.getRoute().getVehicle());
+			double actCost_nextAct = weightOfActCosts*activityCosts.getActivityCost(nextAct, arrTime_nextAct, iFacts.getRoute().getDriver(), iFacts.getRoute().getVehicle());
 			oldCosts = tp_costs_prevAct_nextAct + actCost_nextAct;
 			oldTime = (nextAct.getArrTime() - iFacts.getRoute().getDepartureTime());
 		}
@@ -111,6 +122,16 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 		double additionalTime = (nextAct_arrTime - iFacts.getNewDepTime()) - oldTime;
 
 		return new Marginals(additionalCosts,additionalTime);
+	}
+
+	@Override
+	public void informAlgorithmStarts(VehicleRoutingProblem problem, VehicleRoutingAlgorithm algorithm, Collection<VehicleRoutingProblemSolution> solutions) {
+		nuOfIterations = algorithm.getNuOfIterations();
+	}
+
+	@Override
+	public void informIterationStarts(int i, VehicleRoutingProblem problem, Collection<VehicleRoutingProblemSolution> solutions) {
+		algorithmCompletenessRatio = (double)i/(double)nuOfIterations;
 	}
 
 }

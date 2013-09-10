@@ -27,6 +27,7 @@ import algorithms.HardConstraints.ConstraintManager;
 import basics.VehicleRoutingProblem;
 import basics.algo.InsertionListener;
 import basics.algo.VehicleRoutingAlgorithmListeners.PrioritizedVRAListener;
+import basics.algo.VehicleRoutingAlgorithmListeners.Priority;
 
 
 
@@ -221,6 +222,7 @@ class CalculatorBuilder {
  		
 		MarginalsCalculusTriangleInequality defaultCalc = new MarginalsCalculusTriangleInequality(vrp.getTransportCosts(), vrp.getActivityCosts(), constraintManager);
 		insertionListeners.add(defaultCalc);
+		algorithmListeners.add(new PrioritizedVRAListener(Priority.LOW, defaultCalc));
 		JobInsertionCalculator standardServiceInsertion = new CalculatesServiceInsertion(vrp.getTransportCosts(), defaultCalc, constraintManager);
 		
 		((CalculatesServiceInsertion) standardServiceInsertion).setNeighborhood(vrp.getNeighborhood());

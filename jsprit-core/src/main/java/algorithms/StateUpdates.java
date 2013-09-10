@@ -243,7 +243,12 @@ class StateUpdates {
 		public void nextActivity(TourActivity act, double arrTime, double endTime) {
 //			log.info(act + " job " + ((JobActivity)act).getJob().getId() + " arrTime=" + arrTime + " endTime=" +  endTime);
 			double transportCost = this.transportCost.getTransportCost(prevAct.getLocationId(), act.getLocationId(), startTimeAtPrevAct, vehicleRoute.getDriver(), vehicleRoute.getVehicle());
-			double actCost = activityCost.getActivityCost(act, arrTime, vehicleRoute.getDriver(), vehicleRoute.getVehicle());
+			double actCost;
+			if(!(prevAct instanceof Start)){
+				actCost = activityCost.getActivityCost(act, arrTime, vehicleRoute.getDriver(), vehicleRoute.getVehicle());
+			}
+			else actCost = 0;
+			 
 
 			vehicleRoute.getVehicleRouteCostCalculator().addTransportCost(transportCost);
 			vehicleRoute.getVehicleRouteCostCalculator().addActivityCost(actCost);
