@@ -266,17 +266,6 @@ public class VehicleRoutingProblem {
 		}
 
 		/**
-		 * Sets the neighborhood.
-		 * 
-		 * @param neighborhood
-		 * @return
-		 */
-		public Builder setNeighborhood(Neighborhood neighborhood){
-			this.neighborhood = neighborhood;
-			return this;
-		}
-		
-		/**
 		 * Sets the activityCostFunction that considers also activities on a vehicle-route.
 		 * 
 		 * <p>Here you can consider missed time-windows for example. By default, this is set to a DefaultVehicleActivityCostFunction.
@@ -353,6 +342,18 @@ public class VehicleRoutingProblem {
 		 */
 		public Collection<Service> getAddedServices(){
 			return Collections.unmodifiableCollection(services);
+		}
+
+		/**
+		 * Sets the neighborhood.
+		 * 
+		 * @param neighborhood
+		 * @return
+		 */
+		@Deprecated
+		public Builder setNeighborhood(Neighborhood neighborhood){
+			this.neighborhood = neighborhood;
+			return this;
 		}
 }
 	
@@ -431,13 +432,6 @@ public class VehicleRoutingProblem {
 	}
 
 	/**
-	 * @return the neighborhood
-	 */
-	public Neighborhood getNeighborhood() {
-		return neighborhood;
-	}
-
-	/**
 	 * Returns fleet-composition.
 	 * 
 	 * @return fleetComposition which is either FleetComposition.HETEROGENEOUS or FleetComposition.HOMOGENEOUS
@@ -511,6 +505,14 @@ public class VehicleRoutingProblem {
 	 */
 	public VehicleRoutingActivityCosts getActivityCosts(){
 		return activityCosts;
+	}
+
+	/**
+	 * @return the neighborhood
+	 */
+	@Deprecated
+	public Neighborhood getNeighborhood() {
+		return neighborhood;
 	}
 	
 	
