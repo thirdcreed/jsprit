@@ -34,7 +34,7 @@ class ForwardInTimeListeners {
 		
 		public void start(VehicleRoute route, Start start, double departureTime);
 
-		public void nextActivity(TourActivity act, double arrTime,double endTime);
+		public void nextActivity(TourActivity act, double arrTime, double endTime);
 
 		public void end(End end, double arrivalTime);
 		
