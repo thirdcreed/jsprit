@@ -33,6 +33,7 @@ import basics.algo.IterationStartsListener;
 import basics.algo.JobInsertedListener;
 import basics.costs.VehicleRoutingActivityCosts;
 import basics.costs.VehicleRoutingTransportCosts;
+import basics.route.Start;
 import basics.route.TourActivity;
 import basics.route.VehicleRoute;
 
@@ -48,7 +49,7 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 	
 	private double solutionCompletenessRatio = 1.0;
 	
-	private double weightOfWaitingTimes = 0.3;
+	private double weightOfWaitingTimes = 0.2;
 	
 	private int nuOfCustomersToRecreate;
 	
@@ -83,7 +84,8 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 			return null;
 		}
 		
-		double weightOfActCosts = solutionCompletenessRatio*weightOfWaitingTimes*algorithmCompletenessRatio;
+//		double weightOfActCosts = solutionCompletenessRatio*weightOfWaitingTimes*algorithmCompletenessRatio;
+		double weightOfActCosts = solutionCompletenessRatio*weightOfWaitingTimes*1.0;
 		
 		double tp_costs_prevAct_newAct = routingCosts.getTransportCost(prevAct.getLocationId(), newAct.getLocationId(), depTimeAtPrevAct, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		double tp_time_prevAct_newAct = routingCosts.getTransportTime(prevAct.getLocationId(), newAct.getLocationId(), depTimeAtPrevAct, iFacts.getNewDriver(), iFacts.getNewVehicle());
@@ -92,7 +94,11 @@ class MarginalsCalculusTriangleInequality implements MarginalsCalculus, Insertio
 		
 		double newAct_endTime = CalcUtils.getActivityEndTime(newAct_arrTime, newAct);
 		
-		double act_costs_newAct = weightOfActCosts*activityCosts.getActivityCost(newAct, newAct_arrTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
+		double act_costs_newAct = 0.0;
+		
+		if(!(prevAct instanceof Start)){
+			act_costs_newAct = weightOfActCosts*activityCosts.getActivityCost(newAct, newAct_arrTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
+		}
 		
 		double tp_costs_newAct_nextAct = routingCosts.getTransportCost(newAct.getLocationId(), nextAct.getLocationId(), newAct_endTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
 		double tp_time_newAct_nextAct = routingCosts.getTransportTime(newAct.getLocationId(), nextAct.getLocationId(), newAct_endTime, iFacts.getNewDriver(), iFacts.getNewVehicle());
