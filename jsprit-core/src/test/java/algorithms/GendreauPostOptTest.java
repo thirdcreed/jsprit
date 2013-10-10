@@ -186,8 +186,8 @@ public class GendreauPostOptTest {
 		routes.add(route);
 //		routes.add(new VehicleRoute(getEmptyTour(),getDriver(),getNoVehicle()));
 //		routes.add(new VehicleRoute(getEmptyTour(),getDriver(),getNoVehicle()));
-
-		VehicleRoutingProblemSolution sol = new VehicleRoutingProblemSolution(routes, route.getCost());
+		
+		VehicleRoutingProblemSolution sol = new VehicleRoutingProblemSolution(routes, states.getRouteState(route, StateTypes.COSTS).toDouble() + getFixedCosts(routes));
 		
 		assertEquals(110.0, sol.getCost(), 0.5);
 		
@@ -202,12 +202,27 @@ public class GendreauPostOptTest {
 		postOpt.setFleetManager(fleetManager);
 		
 		VehicleRoutingProblemSolution newSolution = postOpt.runAndGetSolution(sol);
+		newSolution.setCost(getCosts(newSolution,states));
 		
 		assertEquals(2,RouteUtils.getNuOfActiveRoutes(newSolution.getRoutes()));
 		assertEquals(2,newSolution.getRoutes().size());
 		assertEquals(80.0,newSolution.getCost(),0.5);
 	}
 	
+	private double getFixedCosts(Collection<VehicleRoute> routes) {
+		double c = 0.0;
+		for(VehicleRoute r : routes){ c += r.getVehicle().getType().getVehicleCostParams().fix; }
+		return c;
+	}
+
+	private double getCosts(VehicleRoutingProblemSolution newSolution, StateManagerImpl states) {
+		double c = 0.0;
+		for(VehicleRoute r : newSolution.getRoutes()){
+			c += states.getRouteState(r, StateTypes.COSTS).toDouble() + r.getVehicle().getType().getVehicleCostParams().fix;
+		}
+		return c;
+	}
+
 	@Test
 	public void whenPostOpt_optsRoutesWithMoreThanTwoJobs_oneRouteBecomesTwoRoutes(){
 		Collection<Job> jobs = new ArrayList<Job>();
@@ -233,6 +248,7 @@ public class GendreauPostOptTest {
 		routes.add(route);
 
 		VehicleRoutingProblemSolution sol = new VehicleRoutingProblemSolution(routes, route.getCost());
+		sol.setCost(getCosts(sol,states));
 		
 		assertEquals(110.0, sol.getCost(), 0.5);
 		
@@ -246,6 +262,7 @@ public class GendreauPostOptTest {
 		postOpt.setFleetManager(fleetManager);
 //		postOpt.setWithFix(withFixCost);
 		VehicleRoutingProblemSolution newSolution = postOpt.runAndGetSolution(sol);
+		newSolution.setCost(getCosts(newSolution,states));
 		
 		assertEquals(2,RouteUtils.getNuOfActiveRoutes(newSolution.getRoutes()));
 		assertEquals(2,newSolution.getRoutes().size());

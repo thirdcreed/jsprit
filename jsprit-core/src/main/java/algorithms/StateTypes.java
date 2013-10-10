@@ -20,7 +20,11 @@
  ******************************************************************************/
 package algorithms;
 
+
 class StateTypes {
+	
+//	final static StateId LOAD = new StateIdImpl("load");
+	
 	final static String LOAD = "load";
 	
 	final static String LOAD_AT_DEPOT = "loadAtDepot";
@@ -36,4 +40,5 @@ class StateTypes {
 	final static String FUTURE_PICKS = "futurePicks";
 	
 	final static String PAST_DELIVERIES = "pastDeliveries";
+	
 }
