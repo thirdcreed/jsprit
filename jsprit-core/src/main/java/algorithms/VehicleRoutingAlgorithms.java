@@ -36,6 +36,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.log4j.Logger;
 
 import algorithms.HardConstraints.ConstraintManager;
+import algorithms.RuinStrategy.RuinListener;
 import algorithms.VehicleRoutingAlgorithms.TypedMap.AbstractKey;
 import algorithms.VehicleRoutingAlgorithms.TypedMap.AcceptorKey;
 import algorithms.VehicleRoutingAlgorithms.TypedMap.InsertionStrategyKey;
@@ -49,14 +50,20 @@ import algorithms.acceptors.SolutionAcceptor;
 import algorithms.selectors.SelectBest;
 import algorithms.selectors.SelectRandomly;
 import algorithms.selectors.SolutionSelector;
+import basics.Job;
 import basics.VehicleRoutingAlgorithm;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblem.Constraint;
 import basics.VehicleRoutingProblem.FleetSize;
 import basics.VehicleRoutingProblemSolution;
 import basics.algo.AlgorithmStartsListener;
+import basics.algo.InsertionEndsListener;
 import basics.algo.InsertionListener;
+import basics.algo.InsertionStartsListener;
+import basics.algo.IterationEndsListener;
+import basics.algo.IterationStartsListener;
 import basics.algo.IterationWithoutImprovementBreaker;
+import basics.algo.JobInsertedListener;
 import basics.algo.PrematureAlgorithmBreaker;
 import basics.algo.SearchStrategy;
 import basics.algo.SearchStrategy.DiscoveredSolution;
@@ -75,6 +82,66 @@ import basics.route.VehicleRoute;
 
 
 public class VehicleRoutingAlgorithms {
+	
+	
+	
+	static class OptimizationModel implements InsertionStartsListener, JobInsertedListener{
+		
+		private SolutionCostCalculator solutionCostFunction;
+
+		private RouteActivityVisitor updateForward;
+		
+		private ReverseRouteActivityVisitor updateBackward;
+		
+		private InsertionListeners insertionListeners;
+		
+		private ConstraintManager constraintManager;
+		
+		public ConstraintManager getConstraintManager() {
+			return constraintManager;
+		}
+
+		public OptimizationModel(SolutionCostCalculator solutionCostFunction) {
+			super();
+			this.solutionCostFunction = solutionCostFunction;
+			updateForward = new RouteActivityVisitor();
+			updateBackward = new ReverseRouteActivityVisitor();
+			insertionListeners = new InsertionListeners();
+		}
+
+		public InsertionListeners getInsertionListeners() {
+			return insertionListeners;
+		}
+
+		public RouteActivityVisitor getUpdateForward() {
+			return updateForward;
+		}
+
+		public ReverseRouteActivityVisitor getUpdateBackward() {
+			return updateBackward;
+		}
+
+		public SolutionCostCalculator getSolutionCostFunction() {
+			return solutionCostFunction;
+		}
+
+		@Override
+		public void informJobInserted(Job job2insert, VehicleRoute inRoute, double additionalCosts, double additionalTime) {
+			updateForward.visit(inRoute);
+			updateBackward.visit(inRoute);
+		}
+
+		@Override
+		public void informInsertionStarts(Collection<VehicleRoute> vehicleRoutes, Collection<Job> unassignedJobs) {
+			for(VehicleRoute route : vehicleRoutes){ 
+//				for(RouteVisitor v : routeVisitors){ v.visit(route); }
+				updateForward.visit(route);
+				updateBackward.visit(route);
+			}
+		}
+		
+			
+	}
 	
 	static class TypedMap {
 		
@@ -443,24 +510,50 @@ public class VehicleRoutingAlgorithms {
 		//create state-manager
 		final StateManagerImpl stateManager = new StateManagerImpl();
 		
+		OptimizationModel optimizationModel = new OptimizationModel(getCostCalculator(stateManager));
+		optimizationModel.getConstraintManager().addConstraint(new HardConstraints.HardTimeWindowActivityLevelConstraint(stateManager, vrp.getTransportCosts()));
+		if(vrp.getProblemConstraints().contains(Constraint.DELIVERIES_FIRST)){
+			optimizationModel.getConstraintManager().addConstraint(new HardConstraints.HardPickupAndDeliveryBackhaulActivityLevelConstraint(stateManager));
+		}
+		else{
+			optimizationModel.getConstraintManager().addConstraint(new HardConstraints.HardPickupAndDeliveryActivityLevelConstraint(stateManager));
+		}
+		optimizationModel.getConstraintManager().addConstraint(new HardConstraints.HardPickupAndDeliveryLoadConstraint(stateManager));
+		
+		
+		
+		
+		optimizationModel.getInsertionListeners().addListener(new StateUpdates.UpdateLoadsAtStartAndEndOfRouteWhenInsertionStarts(stateManager));
+		
+		optimizationModel.getUpdateForward().addActivityVisitor(new StateUpdates.UpdateActivityTimes(vrp.getTransportCosts()));
+		optimizationModel.getUpdateForward().addActivityVisitor(new StateUpdates.UpdateLoadAtActivityLevel(stateManager));
+		optimizationModel.getUpdateForward().addActivityVisitor(new StateUpdates.UpdateCostsAtAllLevels(vrp.getActivityCosts(), vrp.getTransportCosts(), stateManager));
+		optimizationModel.getUpdateForward().addActivityVisitor(new StateUpdates.UpdateOccuredDeliveriesAtActivityLevel(stateManager));
+		
+		optimizationModel.getUpdateBackward().addActivityVisitor(new StateUpdates.UpdateLatestOperationStartTimeAtActLocations(stateManager, vrp.getTransportCosts()));
+		optimizationModel.getUpdateBackward().addActivityVisitor(new StateUpdates.UpdateFuturePickupsAtActivityLevel(stateManager));
+		
+		
+		
+		
 		/*
 		 * define constraints
 		 */
 		//constraint manager
-		ConstraintManager constraintManager = new ConstraintManager();
-		constraintManager.addConstraint(new HardConstraints.HardTimeWindowActivityLevelConstraint(stateManager, vrp.getTransportCosts()));
+//		ConstraintManager constraintManager = new ConstraintManager();
+//		constraintManager.addConstraint(new HardConstraints.HardTimeWindowActivityLevelConstraint(stateManager, vrp.getTransportCosts()));
 	
-		if(vrp.getProblemConstraints().contains(Constraint.DELIVERIES_FIRST)){
-			constraintManager.addConstraint(new HardConstraints.HardPickupAndDeliveryBackhaulActivityLevelConstraint(stateManager));
-		}
-		else{
-			constraintManager.addConstraint(new HardConstraints.HardPickupAndDeliveryActivityLevelConstraint(stateManager));
-		}
+//		if(vrp.getProblemConstraints().contains(Constraint.DELIVERIES_FIRST)){
+//			constraintManager.addConstraint(new HardConstraints.HardPickupAndDeliveryBackhaulActivityLevelConstraint(stateManager));
+//		}
+//		else{
+//			constraintManager.addConstraint(new HardConstraints.HardPickupAndDeliveryActivityLevelConstraint(stateManager));
+//		}
 		
-		constraintManager.addConstraint(new HardConstraints.HardPickupAndDeliveryLoadConstraint(stateManager));
+//		constraintManager.addConstraint(new HardConstraints.HardPickupAndDeliveryLoadConstraint(stateManager));
 		
 		//construct initial solution creator 
-		AlgorithmStartsListener createInitialSolution = createInitialSolution(config,vrp,vehicleFleetManager,stateManager,algorithmListeners,definedClasses,executorService,nuOfThreads,constraintManager);
+		AlgorithmStartsListener createInitialSolution = createInitialSolution(config,vrp,vehicleFleetManager,stateManager,algorithmListeners,definedClasses,executorService,nuOfThreads,optimizationModel.getConstraintManager());
 		if(createInitialSolution != null) algorithmListeners.add(new PrioritizedVRAListener(Priority.MEDIUM, createInitialSolution));
 
 		//construct algorithm, i.e. search-strategies and its modules
@@ -476,7 +569,7 @@ public class VehicleRoutingAlgorithms {
 			strategy.setName(name);
 			List<HierarchicalConfiguration> modulesConfig = strategyConfig.configurationsAt("modules.module");
 			for(HierarchicalConfiguration moduleConfig : modulesConfig){
-				SearchStrategyModule module = buildModule(moduleConfig,vrp,vehicleFleetManager,stateManager,algorithmListeners,definedClasses,executorService,nuOfThreads, constraintManager);
+				SearchStrategyModule module = buildModule(moduleConfig,vrp,vehicleFleetManager,stateManager,algorithmListeners,definedClasses,executorService,nuOfThreads, optimizationModel.getConstraintManager());
 				strategy.addModule(module);
 			}
 			searchStratManager.addStrategy(strategy, strategyConfig.getDouble("probability"));

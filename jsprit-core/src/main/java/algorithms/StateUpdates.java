@@ -539,7 +539,7 @@ class StateUpdates {
 		
 	}
 	
-	static class UpdateLoadsAtStartAndEndOfRouteWhenInsertionStarts implements InsertionStarts {
+	static class UpdateLoadsAtStartAndEndOfRouteWhenInsertionStarts implements InsertionStarts, InsertionStartsListener {
 
 		private StateManagerImpl stateManager;
 		
@@ -550,6 +550,10 @@ class StateUpdates {
 
 		@Override
 		public void insertionStarts(VehicleRoute route) {
+			updateLoads(route);
+		}
+
+		private void updateLoads(VehicleRoute route) {
 			int loadAtDepot = 0;
 			int loadAtEnd = 0;
 			for(Job j : route.getTourActivities().getJobs()){
@@ -562,6 +566,14 @@ class StateUpdates {
 			}
 			stateManager.putRouteState(route, StateTypes.LOAD_AT_DEPOT, new StateImpl(loadAtDepot));
 			stateManager.putRouteState(route, StateTypes.LOAD, new StateImpl(loadAtEnd));
+		}
+
+		@Override
+		public void informInsertionStarts(Collection<VehicleRoute> vehicleRoutes,Collection<Job> unassignedJobs) {
+			for(VehicleRoute r : vehicleRoutes){
+				insertionStarts(r);
+			}
+			
 		}
 		
 	}
