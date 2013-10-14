@@ -69,13 +69,13 @@ public class SearchStrategy {
 	
 	private SolutionSelector solutionSelector;
 	
-	private SolutionCostCalculator solutionCostCalculator;
+	private SolutionCostFunction solutionCostCalculator;
 
 	private SolutionAcceptor solutionAcceptor;
 	
 	private String name;
 	
-	public SearchStrategy(SolutionSelector solutionSelector, SolutionAcceptor solutionAcceptor, SolutionCostCalculator solutionCostCalculator) {
+	public SearchStrategy(SolutionSelector solutionSelector, SolutionAcceptor solutionAcceptor, SolutionCostFunction solutionCostCalculator) {
 		super();
 		this.solutionSelector = solutionSelector;
 		this.solutionAcceptor = solutionAcceptor;
@@ -129,7 +129,8 @@ public class SearchStrategy {
 			VehicleRoutingProblemSolution newSolution = module.runAndGetSolution(lastSolution);
 			lastSolution = newSolution;
 		}
-		solutionCostCalculator.calculateCosts(lastSolution);
+		double costs = solutionCostCalculator.getValue(lastSolution);
+		lastSolution.setCost(costs);
 		boolean solutionAccepted = solutionAcceptor.acceptSolution(solutions, lastSolution);
 		DiscoveredSolution discoveredSolution = new DiscoveredSolution(lastSolution, solutionAccepted, getName());
 		return discoveredSolution;

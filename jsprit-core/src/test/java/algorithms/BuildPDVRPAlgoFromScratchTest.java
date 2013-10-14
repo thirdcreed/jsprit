@@ -39,7 +39,7 @@ import basics.algo.InsertionStartsListener;
 import basics.algo.JobInsertedListener;
 import basics.algo.SearchStrategy;
 import basics.algo.SearchStrategyManager;
-import basics.algo.SolutionCostCalculator;
+import basics.algo.SolutionCostFunction;
 import basics.io.VrpXMLReader;
 import basics.route.VehicleRoute;
 
@@ -77,10 +77,10 @@ public class BuildPDVRPAlgoFromScratchTest {
 			RuinRadial radial = new RuinRadial(vrp, 0.15, new JobDistanceAvgCosts(vrp.getTransportCosts()));
 			RuinRandom random = new RuinRandom(vrp, 0.25);
 			
-			SolutionCostCalculator solutionCostCalculator = new SolutionCostCalculator() {
+			SolutionCostFunction solutionCostCalculator = new SolutionCostFunction() {
 				
 				@Override
-				public void calculateCosts(VehicleRoutingProblemSolution solution) {
+				public double getValue(VehicleRoutingProblemSolution solution) {
 					double costs = 0.0;
 					for(VehicleRoute route : solution.getRoutes()){
 						costs += stateManager.getRouteState(route, StateIdFactory.COSTS).toDouble();

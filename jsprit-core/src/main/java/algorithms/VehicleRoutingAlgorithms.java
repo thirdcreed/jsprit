@@ -63,7 +63,7 @@ import basics.algo.SearchStrategy;
 import basics.algo.SearchStrategy.DiscoveredSolution;
 import basics.algo.SearchStrategyManager;
 import basics.algo.SearchStrategyModule;
-import basics.algo.SolutionCostCalculator;
+import basics.algo.SolutionCostFunction;
 import basics.algo.TimeBreaker;
 import basics.algo.VariationCoefficientBreaker;
 import basics.algo.VehicleRoutingAlgorithmListeners.PrioritizedVRAListener;
@@ -472,7 +472,7 @@ public class VehicleRoutingAlgorithms {
 			String name = getName(strategyConfig);
 			SolutionAcceptor acceptor = getAcceptor(strategyConfig,vrp,algorithmListeners,definedClasses,solutionMemory);
 			SolutionSelector selector = getSelector(strategyConfig,vrp,algorithmListeners,definedClasses);
-			SolutionCostCalculator costCalculator = getCostCalculator(stateManager);
+			SolutionCostFunction costCalculator = getCostCalculator(stateManager);
 			SearchStrategy strategy = new SearchStrategy(selector, acceptor, costCalculator);
 			strategy.setName(name);
 			List<HierarchicalConfiguration> modulesConfig = strategyConfig.configurationsAt("modules.module");
@@ -546,18 +546,17 @@ public class VehicleRoutingAlgorithms {
 		return metaAlgorithm;	
 	}
 
-	private static SolutionCostCalculator getCostCalculator(final StateManagerImpl stateManager) {
-		SolutionCostCalculator calc = new SolutionCostCalculator() {
+	private static SolutionCostFunction getCostCalculator(final StateManagerImpl stateManager) {
+		SolutionCostFunction calc = new SolutionCostFunction() {
 			
 			@Override
-			public void calculateCosts(VehicleRoutingProblemSolution solution) {
+			public double getValue(VehicleRoutingProblemSolution solution) {
 				double costs = 0.0;
 				for(VehicleRoute route : solution.getRoutes()){
-
 					costs += stateManager.getRouteState(route, StateIdFactory.COSTS).toDouble() + getFixedCosts(route.getVehicle());
 
 				}
-				solution.setCost(costs);
+				return costs;
 			}
 
 			private double getFixedCosts(Vehicle vehicle) {

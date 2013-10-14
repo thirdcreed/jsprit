@@ -46,7 +46,7 @@ public class SearchStrategyTest {
 	public void whenANullModule_IsAdded_throwException(){
 		SolutionSelector select = mock(SolutionSelector.class);
 		SolutionAcceptor accept = mock(SolutionAcceptor.class);
-		SolutionCostCalculator calc = mock(SolutionCostCalculator.class);
+		SolutionCostFunction calc = mock(SolutionCostFunction.class);
 		
 		SearchStrategy strat = new SearchStrategy(select, accept, calc);
 		strat.addModule(null);
@@ -57,7 +57,7 @@ public class SearchStrategyTest {
 	public void whenStratRunsWithOneModule_runItOnes(){
 		SolutionSelector select = mock(SolutionSelector.class);
 		SolutionAcceptor accept = mock(SolutionAcceptor.class);
-		SolutionCostCalculator calc = mock(SolutionCostCalculator.class);
+		SolutionCostFunction calc = mock(SolutionCostFunction.class);
 		
 		final VehicleRoutingProblem vrp = mock(VehicleRoutingProblem.class);
 		final VehicleRoutingProblemSolution newSol = mock(VehicleRoutingProblemSolution.class);
@@ -98,7 +98,7 @@ public class SearchStrategyTest {
 	public void whenStratRunsWithTwoModule_runItTwice(){
 		SolutionSelector select = mock(SolutionSelector.class);
 		SolutionAcceptor accept = mock(SolutionAcceptor.class);
-		SolutionCostCalculator calc = mock(SolutionCostCalculator.class);
+		SolutionCostFunction calc = mock(SolutionCostFunction.class);
 		
 		final VehicleRoutingProblem vrp = mock(VehicleRoutingProblem.class);
 		final VehicleRoutingProblemSolution newSol = mock(VehicleRoutingProblemSolution.class);
@@ -162,7 +162,7 @@ public class SearchStrategyTest {
 	public void whenStratRunsWithNModule_runItNTimes(){
 		SolutionSelector select = mock(SolutionSelector.class);
 		SolutionAcceptor accept = mock(SolutionAcceptor.class);
-		SolutionCostCalculator calc = mock(SolutionCostCalculator.class);
+		SolutionCostFunction calc = mock(SolutionCostFunction.class);
 		
 		final VehicleRoutingProblem vrp = mock(VehicleRoutingProblem.class);
 		final VehicleRoutingProblemSolution newSol = mock(VehicleRoutingProblemSolution.class);
@@ -207,7 +207,7 @@ public class SearchStrategyTest {
 	public void whenSelectorDeliversNullSolution_throwException(){
 		SolutionSelector select = mock(SolutionSelector.class);
 		SolutionAcceptor accept = mock(SolutionAcceptor.class);
-		SolutionCostCalculator calc = mock(SolutionCostCalculator.class);
+		SolutionCostFunction calc = mock(SolutionCostFunction.class);
 		
 		final VehicleRoutingProblem vrp = mock(VehicleRoutingProblem.class);
 		

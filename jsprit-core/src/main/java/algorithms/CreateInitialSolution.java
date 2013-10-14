@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
 import basics.Job;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblemSolution;
-import basics.algo.SolutionCostCalculator;
+import basics.algo.SolutionCostFunction;
 import basics.route.DriverImpl;
 import basics.route.TourActivities;
 import basics.route.Vehicle;
@@ -54,7 +54,7 @@ final class CreateInitialSolution implements InitialSolutionFactory {
 
 	private final InsertionStrategy insertion;
 	
-	private SolutionCostCalculator solutionCostCalculator;
+	private SolutionCostFunction solutionCostCalculator;
 	
 	private boolean generateAsMuchAsRoutesAsVehiclesExist = false;
 	
@@ -62,7 +62,7 @@ final class CreateInitialSolution implements InitialSolutionFactory {
 		this.generateAsMuchAsRoutesAsVehiclesExist = generateAsMuchAsRoutesAsVehiclesExist;
 	}
 
-	public CreateInitialSolution(InsertionStrategy insertionStrategy, SolutionCostCalculator solutionCostCalculator) {
+	public CreateInitialSolution(InsertionStrategy insertionStrategy, SolutionCostFunction solutionCostCalculator) {
 		super();
 		this.insertion = insertionStrategy;
 		this.solutionCostCalculator = solutionCostCalculator;
@@ -81,7 +81,7 @@ final class CreateInitialSolution implements InitialSolutionFactory {
 //		double totalCost = getTotalCost(vehicleRoutes);
 		logger.info("creation done");
 		VehicleRoutingProblemSolution vehicleRoutingProblemSolution = new VehicleRoutingProblemSolution(vehicleRoutes, 0.0);
-		solutionCostCalculator.calculateCosts(vehicleRoutingProblemSolution);
+		solutionCostCalculator.getValue(vehicleRoutingProblemSolution);
 		return vehicleRoutingProblemSolution;
 	}
 
