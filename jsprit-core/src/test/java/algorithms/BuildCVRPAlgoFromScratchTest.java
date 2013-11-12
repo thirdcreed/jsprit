@@ -29,10 +29,15 @@ import algorithms.selectors.SelectBest;
 import basics.VehicleRoutingAlgorithm;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblemSolution;
+import basics.algo.ActivityInsertionCostsCalculator;
+import basics.algo.InsertionContext;
 import basics.algo.IterationStartsListener;
+import basics.algo.JobInsertionCostsCalculator;
+import basics.algo.RuinAndRecreateModule;
 import basics.algo.SearchStrategy;
 import basics.algo.SearchStrategyManager;
 import basics.algo.SolutionCostCalculator;
+import basics.constraints.HardActivityStateLevelConstraint;
 import basics.io.VrpXMLReader;
 import basics.route.InfiniteFleetManagerFactory;
 import basics.route.TourActivity;
@@ -69,7 +74,7 @@ public class BuildCVRPAlgoFromScratchTest {
 		
 		BestInsertion bestInsertion = new BestInsertion(finalServiceInsertion);
 		
-		RuinRadial radial = new RuinRadial(vrp, 0.15, new JobDistanceAvgCosts(vrp.getTransportCosts()));
+		RuinRadial radial = new RuinRadial(vrp, 0.15, new AvgCostsServiceDistance(vrp.getTransportCosts()));
 		RuinRandom random = new RuinRandom(vrp, 0.25);
 		
 		SolutionCostCalculator solutionCostCalculator = new SolutionCostCalculator() {

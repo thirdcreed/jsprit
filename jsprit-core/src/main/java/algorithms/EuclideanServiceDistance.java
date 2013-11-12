@@ -19,6 +19,7 @@ package algorithms;
 import util.EuclideanDistanceCalculator;
 import basics.Job;
 import basics.Service;
+import basics.algo.JobDistance;
 
 class EuclideanServiceDistance implements JobDistance {
 

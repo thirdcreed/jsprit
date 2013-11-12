@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import util.ActivityTimeTracker;
 
+import basics.algo.StateUpdater;
 import basics.costs.ForwardTransportTime;
 import basics.route.ActivityVisitor;
 import basics.route.TourActivity;

@@ -7,6 +7,7 @@ import basics.Job;
 import basics.algo.InsertionEndsListener;
 import basics.algo.InsertionStartsListener;
 import basics.algo.JobInsertedListener;
+import basics.algo.StateUpdater;
 import basics.costs.VehicleRoutingActivityCosts;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.RouteActivityVisitor;

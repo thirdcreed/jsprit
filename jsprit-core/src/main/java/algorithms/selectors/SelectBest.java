@@ -19,6 +19,7 @@ package algorithms.selectors;
 import java.util.Collection;
 
 import basics.VehicleRoutingProblemSolution;
+import basics.algo.SolutionSelector;
 
 
 

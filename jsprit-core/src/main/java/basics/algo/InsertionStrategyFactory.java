@@ -14,25 +14,12 @@
  * You should have received a copy of the GNU Lesser General Public 
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algorithms;
+package basics.algo;
 
-import basics.route.TourActivity;
-import basics.route.VehicleRoute;
+import basics.VehicleRoutingProblem;
 
-public interface StateGetter {
+public interface InsertionStrategyFactory {
+
+	public InsertionStrategy createStrategy(VehicleRoutingProblem vrp);
 	
-	public interface StateId {
-		
-	}
-	
-	public interface State {
-		double toDouble();
-	}
-	
-
-	State getActivityState(TourActivity act, StateId stateId);
-
-	State getRouteState(VehicleRoute route, StateId stateId);
-
-
 }

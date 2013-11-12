@@ -20,6 +20,8 @@
  ******************************************************************************/
 package algorithms;
 
+import basics.algo.ActivityInsertionCostsCalculator;
+import basics.algo.InsertionContext;
 import basics.costs.VehicleRoutingActivityCosts;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.TourActivity;

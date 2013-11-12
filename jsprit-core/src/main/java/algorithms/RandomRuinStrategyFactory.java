@@ -1,6 +1,8 @@
 package algorithms;
 
 import basics.VehicleRoutingProblem;
+import basics.algo.RuinStrategy;
+import basics.algo.RuinStrategyFactory;
 
 public class RandomRuinStrategyFactory implements RuinStrategyFactory{
 

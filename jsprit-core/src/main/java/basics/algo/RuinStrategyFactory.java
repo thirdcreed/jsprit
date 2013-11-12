@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU Lesser General Public 
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algorithms;
+package basics.algo;
 
 import basics.VehicleRoutingProblem;
 
-public interface InsertionStrategyFactory {
-
-	public InsertionStrategy createStrategy(VehicleRoutingProblem vrp);
+public interface RuinStrategyFactory {
 	
+	public RuinStrategy createStrategy(VehicleRoutingProblem vrp);
+
 }

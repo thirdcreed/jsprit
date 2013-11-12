@@ -20,7 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import basics.VehicleRoutingProblem;
+import basics.algo.ActivityInsertionCostsCalculator;
 import basics.algo.InsertionListener;
+import basics.algo.JobInsertionCostsCalculator;
+import basics.algo.StateGetter;
 import basics.algo.VehicleRoutingAlgorithmListeners.PrioritizedVRAListener;
 import basics.route.VehicleFleetManager;
 

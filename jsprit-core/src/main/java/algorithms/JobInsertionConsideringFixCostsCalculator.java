@@ -18,8 +18,11 @@ package algorithms;
 
 import org.apache.log4j.Logger;
 
-import algorithms.InsertionData.NoInsertionFound;
 import basics.Job;
+import basics.algo.InsertionData;
+import basics.algo.JobInsertionCostsCalculator;
+import basics.algo.StateGetter;
+import basics.algo.InsertionData.NoInsertionData;
 import basics.route.Driver;
 import basics.route.Vehicle;
 import basics.route.VehicleImpl.NoVehicle;
@@ -56,7 +59,7 @@ final class JobInsertionConsideringFixCostsCalculator implements JobInsertionCos
 			return InsertionData.createEmptyInsertionData();
 		}
 		InsertionData iData = standardServiceInsertion.getInsertionData(currentRoute, jobToInsert, newVehicle, newVehicleDepartureTime, newDriver, bestKnownPrice);
-		if(iData instanceof NoInsertionFound){
+		if(iData instanceof NoInsertionData){
 			return iData;
 		} 
 		double totalInsertionCost = iData.getInsertionCost() + fixcost_contribution;

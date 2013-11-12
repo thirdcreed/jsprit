@@ -1,6 +1,9 @@
 package algorithms;
 
 import basics.VehicleRoutingProblem;
+import basics.algo.InsertionContext;
+import basics.constraints.HardActivityStateLevelConstraint;
+import basics.constraints.HardRouteStateLevelConstraint;
 import basics.route.TourActivity;
 
 public class ConstraintManager implements HardActivityStateLevelConstraint, HardRouteStateLevelConstraint{

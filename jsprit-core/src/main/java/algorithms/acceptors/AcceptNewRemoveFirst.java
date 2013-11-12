@@ -19,6 +19,7 @@ package algorithms.acceptors;
 import java.util.Collection;
 
 import basics.VehicleRoutingProblemSolution;
+import basics.algo.SolutionAcceptor;
 
 
 public class AcceptNewRemoveFirst implements SolutionAcceptor{

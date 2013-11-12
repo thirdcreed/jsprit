@@ -23,6 +23,8 @@ import java.util.Random;
 import org.apache.log4j.Logger;
 
 import basics.Job;
+import basics.algo.InsertionData;
+import basics.algo.JobInsertionCostsCalculator;
 import basics.route.Driver;
 import basics.route.Vehicle;
 import basics.route.VehicleRoute;

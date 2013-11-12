@@ -22,7 +22,6 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import util.Counter;
-import algorithms.acceptors.SolutionAcceptor;
 import basics.algo.AlgorithmEndsListener;
 import basics.algo.AlgorithmStartsListener;
 import basics.algo.IterationEndsListener;
@@ -30,6 +29,7 @@ import basics.algo.IterationStartsListener;
 import basics.algo.IterationWithoutImprovementBreaker;
 import basics.algo.PrematureAlgorithmBreaker;
 import basics.algo.SearchStrategy;
+import basics.algo.SolutionAcceptor;
 import basics.algo.SearchStrategy.DiscoveredSolution;
 import basics.algo.SearchStrategyManager;
 import basics.algo.VehicleRoutingAlgorithmListener;

@@ -1,5 +1,6 @@
-package algorithms;
+package basics.constraints;
 
+import basics.algo.InsertionContext;
 import basics.route.TourActivity;
 
 public interface HardActivityStateLevelConstraint {

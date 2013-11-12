@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import basics.Job;
+import basics.algo.InsertionData;
 import basics.algo.InsertionEndsListener;
 import basics.algo.InsertionListener;
 import basics.algo.InsertionStartsListener;

@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import basics.Job;
 import basics.Service;
+import basics.algo.InsertionData;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.DriverImpl;
 import basics.route.DriverImpl.NoDriver;

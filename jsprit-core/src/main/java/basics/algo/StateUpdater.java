@@ -1,4 +1,4 @@
-package algorithms;
+package basics.algo;
 
 public interface StateUpdater {
 

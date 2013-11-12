@@ -3,6 +3,8 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import basics.algo.InsertionContext;
+import basics.constraints.HardActivityStateLevelConstraint;
 import basics.route.TourActivity;
 
 class HardActivityLevelConstraintManager implements HardActivityStateLevelConstraint {

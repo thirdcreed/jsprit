@@ -27,6 +27,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import basics.Service;
+import basics.algo.InsertionData;
+import basics.algo.JobInsertionCostsCalculator;
 import basics.route.TimeWindow;
 import basics.route.Vehicle;
 import basics.route.VehicleFleetManager;

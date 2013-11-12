@@ -14,48 +14,66 @@
  * You should have received a copy of the GNU Lesser General Public 
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algorithms;
-
-import java.util.Collection;
+package basics.algo;
 
 import basics.Job;
-import basics.algo.RuinListener;
+import basics.route.Driver;
+import basics.route.Vehicle;
 import basics.route.VehicleRoute;
 
-
-
-
-/**
- * 
- * @author stefan schroeder
- * 
- */
-
-public interface RuinStrategy {
+public class InsertionContext {
+	
+	private VehicleRoute route;
+	private Job job;
+	private Vehicle newVehicle;
+	private Driver newDriver;
+	private double newDepTime;
 	
 	/**
-	 * Ruins a current solution, i.e. a collection of vehicle-routes and 
-	 * returns a collection of removed and thus unassigned jobs.
-	 * 
-	 * @param {@link VehicleRoute}
-	 * @return Collection of {@link Job}
+	 * @return the route
 	 */
-	public Collection<Job> ruin(Collection<VehicleRoute> vehicleRoutes);
+	public VehicleRoute getRoute() {
+		return route;
+	}
 
 	/**
-	 * Removes targetJob as well as its neighbors with a size of (nOfJobs2BeRemoved-1). 
+	 * @return the job
 	 */
-	public Collection<Job> ruin(Collection<VehicleRoute> vehicleRoutes, Job targetJob, int nOfJobs2BeRemoved);
-	
+	public Job getJob() {
+		return job;
+	}
+
 	/**
-	 * Adds a ruin-listener.
-	 * 
-	 * @param {@link RuinListener}
+	 * @return the newVehicle
 	 */
-	public void addListener(RuinListener ruinListener);
+	public Vehicle getNewVehicle() {
+		return newVehicle;
+	}
+
+	/**
+	 * @return the newDriver
+	 */
+	public Driver getNewDriver() {
+		return newDriver;
+	}
+
+	/**
+	 * @return the newDepTime
+	 */
+	public double getNewDepTime() {
+		return newDepTime;
+	}
+
+	public InsertionContext(VehicleRoute route, Job job, Vehicle newVehicle,
+			Driver newDriver, double newDepTime) {
+		super();
+		this.route = route;
+		this.job = job;
+		this.newVehicle = newVehicle;
+		this.newDriver = newDriver;
+		this.newDepTime = newDepTime;
+	}
 	
-	public void removeListener(RuinListener ruinListener);
 	
-	public Collection<RuinListener> getListeners();
 
 }

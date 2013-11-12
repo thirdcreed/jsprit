@@ -40,10 +40,8 @@ import algorithms.VehicleRoutingAlgorithms.TypedMap.StrategyModuleKey;
 import algorithms.acceptors.AcceptNewIfBetterThanWorst;
 import algorithms.acceptors.AcceptNewRemoveFirst;
 import algorithms.acceptors.SchrimpfAcceptance;
-import algorithms.acceptors.SolutionAcceptor;
 import algorithms.selectors.SelectBest;
 import algorithms.selectors.SelectRandomly;
-import algorithms.selectors.SolutionSelector;
 import basics.VehicleRoutingAlgorithm;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblem.Constraint;
@@ -51,9 +49,15 @@ import basics.VehicleRoutingProblem.FleetSize;
 import basics.VehicleRoutingProblemSolution;
 import basics.algo.AlgorithmStartsListener;
 import basics.algo.InsertionListener;
+import basics.algo.InsertionStrategy;
 import basics.algo.IterationWithoutImprovementBreaker;
+import basics.algo.JobDistance;
 import basics.algo.PrematureAlgorithmBreaker;
+import basics.algo.RuinAndRecreateModule;
+import basics.algo.RuinStrategy;
 import basics.algo.SearchStrategy;
+import basics.algo.SolutionAcceptor;
+import basics.algo.SolutionSelector;
 import basics.algo.SearchStrategy.DiscoveredSolution;
 import basics.algo.SearchStrategyManager;
 import basics.algo.SearchStrategyModule;
@@ -62,6 +66,7 @@ import basics.algo.TimeBreaker;
 import basics.algo.VariationCoefficientBreaker;
 import basics.algo.VehicleRoutingAlgorithmListeners.PrioritizedVRAListener;
 import basics.algo.VehicleRoutingAlgorithmListeners.Priority;
+import basics.constraints.ServiceBackhaulConstraint;
 import basics.io.AlgorithmConfig;
 import basics.io.AlgorithmConfigXmlReader;
 import basics.route.FiniteFleetManagerFactory;
@@ -754,7 +759,7 @@ public class VehicleRoutingAlgorithms {
 			else if(ruin_name.equals("radialRuin")){
 				String ruin_distance = moduleConfig.getString("ruin.distance");
 				JobDistance jobDistance;
-				if(ruin_distance == null) jobDistance = new JobDistanceAvgCosts(vrp.getTransportCosts());
+				if(ruin_distance == null) jobDistance = new AvgCostsServiceDistance(vrp.getTransportCosts());
 				else {
 					if(ruin_distance.equals("euclidean")){
 						jobDistance = new EuclideanServiceDistance();
@@ -796,7 +801,7 @@ public class VehicleRoutingAlgorithms {
 			RuinStrategyKey stratKey = new RuinStrategyKey(ruinKey);
 			RuinStrategy ruin = definedClasses.get(stratKey);
 			if(ruin == null){
-				ruin = new RuinRadial(vrp, 0.3, new JobDistanceAvgCosts(vrp.getTransportCosts()));
+				ruin = new RuinRadial(vrp, 0.3, new AvgCostsServiceDistance(vrp.getTransportCosts()));
 				definedClasses.put(stratKey, ruin);
 			}
 			

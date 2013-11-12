@@ -32,8 +32,11 @@ import basics.Pickup;
 import basics.VehicleRoutingAlgorithm;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblemSolution;
+import basics.algo.ActivityInsertionCostsCalculator;
 import basics.algo.InsertionStartsListener;
 import basics.algo.JobInsertedListener;
+import basics.algo.JobInsertionCostsCalculator;
+import basics.algo.RuinAndRecreateModule;
 import basics.algo.SearchStrategy;
 import basics.algo.SearchStrategyManager;
 import basics.algo.SolutionCostCalculator;
@@ -75,7 +78,7 @@ public class BuildPDVRPAlgoFromScratchTest {
 			
 			BestInsertion bestInsertion = new BestInsertion(finalServiceInsertion);
 			
-			RuinRadial radial = new RuinRadial(vrp, 0.15, new JobDistanceAvgCosts(vrp.getTransportCosts()));
+			RuinRadial radial = new RuinRadial(vrp, 0.15, new AvgCostsServiceDistance(vrp.getTransportCosts()));
 			RuinRandom random = new RuinRandom(vrp, 0.25);
 			
 			SolutionCostCalculator solutionCostCalculator = new SolutionCostCalculator() {

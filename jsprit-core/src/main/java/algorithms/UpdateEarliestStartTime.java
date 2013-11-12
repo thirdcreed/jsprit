@@ -2,6 +2,7 @@ package algorithms;
 
 import util.ActivityTimeTracker;
 import algorithms.StateManager.StateImpl;
+import basics.algo.StateUpdater;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.ActivityVisitor;
 import basics.route.TourActivity;

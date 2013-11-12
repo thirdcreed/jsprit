@@ -25,9 +25,12 @@ import java.util.Random;
 import org.apache.log4j.Logger;
 
 import util.RandomNumberGeneration;
-import algorithms.InsertionData.NoInsertionFound;
 import basics.Job;
+import basics.algo.InsertionData;
 import basics.algo.InsertionListener;
+import basics.algo.InsertionStrategy;
+import basics.algo.JobInsertionCostsCalculator;
+import basics.algo.InsertionData.NoInsertionData;
 import basics.route.Driver;
 import basics.route.Vehicle;
 import basics.route.VehicleRoute;
@@ -109,7 +112,7 @@ final class BestInsertion implements InsertionStrategy{
 			double bestInsertionCost = Double.MAX_VALUE;
 			for(VehicleRoute vehicleRoute : vehicleRoutes){
 				InsertionData iData = bestInsertionCostCalculator.getInsertionData(vehicleRoute, unassignedJob, NO_NEW_VEHICLE_YET, NO_NEW_DEPARTURE_TIME_YET, NO_NEW_DRIVER_YET, bestInsertionCost); 
-				if(iData instanceof NoInsertionFound) {
+				if(iData instanceof NoInsertionData) {
 					continue;
 				}
 				if(iData.getInsertionCost() < bestInsertionCost){
@@ -129,7 +132,7 @@ final class BestInsertion implements InsertionStrategy{
 			if(bestInsertion == null){
 				VehicleRoute newRoute = VehicleRoute.emptyRoute();
 				InsertionData bestI = bestInsertionCostCalculator.getInsertionData(newRoute, unassignedJob, NO_NEW_VEHICLE_YET, NO_NEW_DEPARTURE_TIME_YET, NO_NEW_DRIVER_YET, Double.MAX_VALUE);
-				if(bestI instanceof InsertionData.NoInsertionFound){
+				if(bestI instanceof InsertionData.NoInsertionData){
 					throw new IllegalStateException(getErrorMsg(unassignedJob));
 				}
 				else{

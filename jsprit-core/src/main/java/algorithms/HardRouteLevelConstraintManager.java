@@ -3,6 +3,9 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import basics.algo.InsertionContext;
+import basics.constraints.HardRouteStateLevelConstraint;
+
 
 class HardRouteLevelConstraintManager implements HardRouteStateLevelConstraint {
 

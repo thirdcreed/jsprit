@@ -40,6 +40,8 @@ import org.apache.log4j.Logger;
 import basics.Job;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblemSolution;
+import basics.algo.InitialSolutionFactory;
+import basics.algo.InsertionStrategy;
 import basics.algo.SolutionCostCalculator;
 import basics.route.VehicleRoute;
 

@@ -21,8 +21,10 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import algorithms.InsertionData.NoInsertionFound;
 import basics.Job;
+import basics.algo.InsertionData;
+import basics.algo.JobInsertionCostsCalculator;
+import basics.algo.InsertionData.NoInsertionData;
 import basics.route.Driver;
 import basics.route.Vehicle;
 import basics.route.VehicleFleetManager;
@@ -67,8 +69,8 @@ final class VehicleTypeDependentJobInsertionCalculator implements JobInsertionCo
 		for(Vehicle v : relevantVehicles){
 			double depTime = v.getEarliestDeparture();
 			InsertionData iData = insertionCalculator.getInsertionData(currentRoute, jobToInsert, v, depTime, selectedDriver, bestKnownCost_);
-			if(iData instanceof NoInsertionFound) { 
-				if(bestIData instanceof NoInsertionFound) bestIData = iData;
+			if(iData instanceof NoInsertionData) { 
+				if(bestIData instanceof NoInsertionData) bestIData = iData;
 				continue;
 			}
 			if(iData.getInsertionCost() < bestKnownCost_){

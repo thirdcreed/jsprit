@@ -32,6 +32,8 @@ import util.Coordinate;
 import util.ManhattanDistanceCalculator;
 import basics.Job;
 import basics.Service;
+import basics.algo.ActivityInsertionCostsCalculator;
+import basics.algo.InsertionData;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.Driver;
 import basics.route.DriverImpl;

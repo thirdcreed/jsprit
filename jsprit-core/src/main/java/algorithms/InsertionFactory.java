@@ -25,6 +25,8 @@ import org.apache.log4j.Logger;
 
 import basics.VehicleRoutingProblem;
 import basics.algo.InsertionListener;
+import basics.algo.InsertionStrategy;
+import basics.algo.JobInsertionCostsCalculator;
 import basics.algo.VehicleRoutingAlgorithmListeners.PrioritizedVRAListener;
 import basics.route.VehicleFleetManager;
 

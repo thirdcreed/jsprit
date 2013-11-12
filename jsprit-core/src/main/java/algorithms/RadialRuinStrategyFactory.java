@@ -1,6 +1,9 @@
 package algorithms;
 
 import basics.VehicleRoutingProblem;
+import basics.algo.JobDistance;
+import basics.algo.RuinStrategy;
+import basics.algo.RuinStrategyFactory;
 
 public class RadialRuinStrategyFactory implements RuinStrategyFactory{
 

@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import util.ActivityTimeTracker;
 
 import algorithms.StateManager.StateImpl;
+import basics.algo.StateUpdater;
 import basics.costs.ForwardTransportCost;
 import basics.costs.VehicleRoutingActivityCosts;
 import basics.costs.VehicleRoutingTransportCosts;

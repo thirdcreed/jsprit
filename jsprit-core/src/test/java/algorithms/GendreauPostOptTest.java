@@ -33,6 +33,8 @@ import basics.Job;
 import basics.Service;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblemSolution;
+import basics.algo.InsertionStrategy;
+import basics.algo.JobInsertionCostsCalculator;
 import basics.costs.VehicleRoutingActivityCosts;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.Driver;
@@ -192,7 +194,7 @@ public class GendreauPostOptTest {
 		assertEquals(110.0, sol.getCost(), 0.5);
 		
 		
-		RuinRadial radialRuin = new RuinRadial(vrp, 0.2, new JobDistanceAvgCosts(vrp.getTransportCosts()));
+		RuinRadial radialRuin = new RuinRadial(vrp, 0.2, new AvgCostsServiceDistance(vrp.getTransportCosts()));
 //		radialRuin.addListener(stateUpdater);
 		
 		InsertionStrategy insertionStrategy = new BestInsertion(insertionCalc);
@@ -253,7 +255,7 @@ public class GendreauPostOptTest {
 		
 		assertEquals(110.0, sol.getCost(), 0.5);
 		
-		RuinRadial radialRuin = new RuinRadial(vrp, 0.2, new JobDistanceAvgCosts(vrp.getTransportCosts()));
+		RuinRadial radialRuin = new RuinRadial(vrp, 0.2, new AvgCostsServiceDistance(vrp.getTransportCosts()));
 		InsertionStrategy insertionStrategy = new BestInsertion(insertionCalc);
 		insertionStrategy.addListener(stateUpdater);
 		insertionStrategy.addListener(new VehicleSwitched(fleetManager));

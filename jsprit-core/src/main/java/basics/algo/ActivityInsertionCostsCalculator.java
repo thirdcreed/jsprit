@@ -18,7 +18,7 @@
  * Contributors:
  *     Stefan Schroeder - initial API and implementation
  ******************************************************************************/
-package algorithms;
+package basics.algo;
 
 import basics.route.TourActivity;
 

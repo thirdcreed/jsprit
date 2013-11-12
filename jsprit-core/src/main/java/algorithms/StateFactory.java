@@ -23,8 +23,9 @@ package algorithms;
 import java.util.Arrays;
 import java.util.List;
 
-import algorithms.StateGetter.State;
-import algorithms.StateGetter.StateId;
+import basics.algo.StateGetter.State;
+import basics.algo.StateGetter.StateId;
+
 import algorithms.StateManager.StateImpl;
 
 public class StateFactory {

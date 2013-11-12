@@ -2,6 +2,9 @@ package algorithms;
 
 import org.apache.log4j.Logger;
 
+import basics.algo.InsertionContext;
+import basics.algo.StateGetter;
+import basics.constraints.HardActivityStateLevelConstraint;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.TourActivity;
 

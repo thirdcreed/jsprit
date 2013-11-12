@@ -31,6 +31,7 @@ import basics.VehicleRoutingProblemSolution;
 import basics.algo.AlgorithmStartsListener;
 import basics.algo.IterationEndsListener;
 import basics.algo.IterationStartsListener;
+import basics.algo.SolutionAcceptor;
 import basics.io.AlgorithmConfig;
 import basics.io.AlgorithmConfigXmlReader;
 

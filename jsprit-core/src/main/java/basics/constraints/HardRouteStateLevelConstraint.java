@@ -1,4 +1,6 @@
-package algorithms;
+package basics.constraints;
+
+import basics.algo.InsertionContext;
 
 
 public interface HardRouteStateLevelConstraint {

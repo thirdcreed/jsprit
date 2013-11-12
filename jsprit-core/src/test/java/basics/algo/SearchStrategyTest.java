@@ -26,8 +26,6 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import algorithms.acceptors.SolutionAcceptor;
-import algorithms.selectors.SolutionSelector;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblemSolution;
 

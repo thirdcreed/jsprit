@@ -19,10 +19,16 @@ package algorithms;
 import org.apache.log4j.Logger;
 
 import util.Neighborhood;
-import algorithms.ActivityInsertionCostsCalculator.ActivityInsertionCosts;
-import algorithms.HardActivityStateLevelConstraint.ConstraintsStatus;
 import basics.Job;
 import basics.Service;
+import basics.algo.ActivityInsertionCostsCalculator;
+import basics.algo.InsertionContext;
+import basics.algo.InsertionData;
+import basics.algo.JobInsertionCostsCalculator;
+import basics.algo.ActivityInsertionCostsCalculator.ActivityInsertionCosts;
+import basics.constraints.HardActivityStateLevelConstraint;
+import basics.constraints.HardRouteStateLevelConstraint;
+import basics.constraints.HardActivityStateLevelConstraint.ConstraintsStatus;
 import basics.costs.VehicleRoutingTransportCosts;
 import basics.route.DefaultTourActivityFactory;
 import basics.route.Driver;

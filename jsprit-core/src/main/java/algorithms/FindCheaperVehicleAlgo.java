@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import basics.algo.StateGetter;
 import basics.route.TourActivities;
 import basics.route.TourActivity;
 import basics.route.Vehicle;

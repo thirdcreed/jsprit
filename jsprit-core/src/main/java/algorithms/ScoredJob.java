@@ -17,6 +17,7 @@
 package algorithms;
 
 import basics.Job;
+import basics.algo.InsertionData;
 import basics.route.VehicleRoute;
 
 

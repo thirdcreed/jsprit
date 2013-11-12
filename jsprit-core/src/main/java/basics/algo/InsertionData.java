@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Lesser General Public 
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algorithms;
+package basics.algo;
 
 import basics.route.Driver;
 import basics.route.Vehicle;
@@ -28,15 +28,15 @@ import basics.route.Vehicle;
  */
 public class InsertionData {
 	
-	static class NoInsertionFound extends InsertionData{
+	public static class NoInsertionData extends InsertionData{
 		
-		public NoInsertionFound() {
+		public NoInsertionData() {
 			super(Double.MAX_VALUE, NO_INDEX, NO_INDEX, null, null);
 		}
 
 	}
 	
-	private static InsertionData noInsertion = new NoInsertionFound();
+	private static InsertionData noInsertion = new NoInsertionData();
 	
 	/**
 	 * Returns an instance of InsertionData that represents an EmptyInsertionData (which might indicate
@@ -50,7 +50,7 @@ public class InsertionData {
 		return noInsertion;
 	}
 	
-	static int NO_INDEX = -1;
+	public static int NO_INDEX = -1;
 
 	private final double insertionCost;
 	

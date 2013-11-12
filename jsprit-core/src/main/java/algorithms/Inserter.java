@@ -16,9 +16,10 @@
  ******************************************************************************/
 package algorithms;
 
-import algorithms.InsertionData.NoInsertionFound;
 import basics.Job;
 import basics.Service;
+import basics.algo.InsertionData;
+import basics.algo.InsertionData.NoInsertionData;
 import basics.route.DefaultTourActivityFactory;
 import basics.route.TourActivityFactory;
 import basics.route.VehicleRoute;
@@ -37,7 +38,7 @@ class Inserter {
 	public void insertJob(Job job, InsertionData insertionData, VehicleRoute vehicleRoute){
 		insertionListeners.informBeforeJobInsertion(job, insertionData, vehicleRoute);
 		
-		if(insertionData == null || (insertionData instanceof NoInsertionFound)) throw new IllegalStateException("insertionData null. cannot insert job.");
+		if(insertionData == null || (insertionData instanceof NoInsertionData)) throw new IllegalStateException("insertionData null. cannot insert job.");
 		if(job == null) throw new IllegalStateException("cannot insert null-job");
 		if(!(vehicleRoute.getVehicle().getId().toString().equals(insertionData.getSelectedVehicle().getId().toString()))){
 			insertionListeners.informVehicleSwitched(vehicleRoute, vehicleRoute.getVehicle(), insertionData.getSelectedVehicle());

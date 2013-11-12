@@ -55,7 +55,7 @@ public class TestJobDistanceAvgCosts {
 				return 0;
 			}
 		};
-		JobDistanceAvgCosts c = new JobDistanceAvgCosts(costs);
+		AvgCostsServiceDistance c = new AvgCostsServiceDistance(costs);
 		c.getDistance(Service.Builder.newInstance("1", 1).setLocationId("foo").build(), Service.Builder.newInstance("2", 2).setLocationId("foo").build());
 	}
 	
@@ -91,7 +91,7 @@ public class TestJobDistanceAvgCosts {
 				return 0;
 			}
 		};
-		JobDistanceAvgCosts c = new JobDistanceAvgCosts(costs);
+		AvgCostsServiceDistance c = new AvgCostsServiceDistance(costs);
 		c.getDistance(Service.Builder.newInstance("1", 1).setLocationId("loc").build(), Service.Builder.newInstance("2", 2).setLocationId("loc").build());
 	}
 

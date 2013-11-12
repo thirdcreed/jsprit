@@ -22,8 +22,6 @@ import java.util.Collections;
 
 import org.apache.log4j.Logger;
 
-import algorithms.acceptors.SolutionAcceptor;
-import algorithms.selectors.SolutionSelector;
 import basics.VehicleRoutingProblem;
 import basics.VehicleRoutingProblemSolution;
 

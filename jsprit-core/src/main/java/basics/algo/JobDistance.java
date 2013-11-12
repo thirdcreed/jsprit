@@ -14,16 +14,14 @@
  * You should have received a copy of the GNU Lesser General Public 
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algorithms;
+package basics.algo;
 
 import basics.Job;
-import basics.route.Driver;
-import basics.route.Vehicle;
-import basics.route.VehicleRoute;
 
 
- public interface JobInsertionCostsCalculator {
-	
-	public InsertionData getInsertionData(VehicleRoute currentRoute, Job newJob, Vehicle newVehicle, double newVehicleDepartureTime, Driver newDriver, double bestKnownCosts);
+
+public interface JobDistance {
+
+	public double getDistance(Job i, Job j);
 
 }

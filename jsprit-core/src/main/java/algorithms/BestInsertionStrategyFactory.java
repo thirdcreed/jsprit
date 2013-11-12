@@ -1,6 +1,9 @@
 package algorithms;
 
 import basics.VehicleRoutingProblem;
+import basics.algo.InsertionStrategy;
+import basics.algo.InsertionStrategyFactory;
+import basics.algo.JobInsertionCostsCalculator;
 
 public class BestInsertionStrategyFactory implements InsertionStrategyFactory{
 

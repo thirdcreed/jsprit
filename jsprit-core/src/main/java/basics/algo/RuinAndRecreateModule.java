@@ -14,16 +14,12 @@
  * You should have received a copy of the GNU Lesser General Public 
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algorithms;
+package basics.algo;
 
 import java.util.Collection;
 
 import basics.Job;
 import basics.VehicleRoutingProblemSolution;
-import basics.algo.InsertionListener;
-import basics.algo.RuinListener;
-import basics.algo.SearchStrategyModule;
-import basics.algo.SearchStrategyModuleListener;
 
 public class RuinAndRecreateModule implements SearchStrategyModule{
 

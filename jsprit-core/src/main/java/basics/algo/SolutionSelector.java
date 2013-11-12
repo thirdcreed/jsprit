@@ -14,37 +14,15 @@
  * You should have received a copy of the GNU Lesser General Public 
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algorithms;
+package basics.algo;
 
 import java.util.Collection;
 
-import basics.Job;
-import basics.algo.InsertionListener;
-import basics.route.VehicleRoute;
+import basics.VehicleRoutingProblemSolution;
 
 
-
-
-/**
- * 
- * @author stefan schroeder
- * 
- */
-
-public interface InsertionStrategy {
-
-	/**
-	 * Assigns the unassigned jobs to service-providers
-	 * 
-	 * @param vehicleRoutes
-	 * @param unassignedJobs
-	 */
-	public void insertJobs(Collection<VehicleRoute> vehicleRoutes, Collection<Job> unassignedJobs);
+public interface SolutionSelector {
 	
-	public void addListener(InsertionListener insertionListener);
-	
-	public void removeListener(InsertionListener insertionListener);
-	
-	public Collection<InsertionListener> getListeners();
+	public VehicleRoutingProblemSolution selectSolution(Collection<VehicleRoutingProblemSolution> solutions);
 
 }

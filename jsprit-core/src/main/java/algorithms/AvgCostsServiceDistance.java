@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import basics.Job;
 import basics.Service;
+import basics.algo.JobDistance;
 import basics.costs.VehicleRoutingTransportCosts;
 
 
@@ -31,13 +32,13 @@ import basics.costs.VehicleRoutingTransportCosts;
  * @author stefan schroeder
  *
  */
-public class JobDistanceAvgCosts implements JobDistance {
+public class AvgCostsServiceDistance implements JobDistance {
 
-	private static Logger log = Logger.getLogger(JobDistanceAvgCosts.class);
+	private static Logger log = Logger.getLogger(AvgCostsServiceDistance.class);
 	
 	private VehicleRoutingTransportCosts costs;
 
-	public JobDistanceAvgCosts(VehicleRoutingTransportCosts costs) {
+	public AvgCostsServiceDistance(VehicleRoutingTransportCosts costs) {
 		super();
 		this.costs = costs;
 
