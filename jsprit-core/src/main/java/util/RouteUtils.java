@@ -18,8 +18,9 @@ package util;
 
 import java.util.Collection;
 
-import basics.route.TourActivity;
-import basics.route.VehicleRoute;
+import problem.solution.route.VehicleRoute;
+import problem.solution.route.activity.TourActivity;
+
 
 
 

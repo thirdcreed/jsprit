@@ -24,8 +24,9 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import basics.Service;
-import basics.route.Vehicle;
+import problem.job.Service;
+import problem.vehicle.Vehicle;
+
 
 
 

@@ -26,17 +26,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetSize;
+import problem.job.Service;
+import problem.vehicle.PenaltyVehicleType;
+import problem.vehicle.VehicleImpl;
+import problem.vehicle.VehicleType;
+import problem.vehicle.VehicleTypeImpl;
+import problem.vehicle.VehicleImpl.Builder;
+
 import readers.CordeauReader;
 import util.Coordinate;
 
-import basics.VehicleRoutingProblem.FleetSize;
-import basics.route.PenaltyVehicleType;
-import basics.route.VehicleImpl;
-import basics.route.VehicleImpl.Builder;
-import basics.route.VehicleType;
-import basics.route.VehicleTypeImpl;
-import basics.Service;
-import basics.VehicleRoutingProblem;
 
 /**
  * Reader that reads instances developed by:

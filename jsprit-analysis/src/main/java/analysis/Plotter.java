@@ -41,17 +41,18 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import problem.VehicleRoutingProblem;
+import problem.job.Delivery;
+import problem.job.Job;
+import problem.job.Pickup;
+import problem.job.Service;
+import problem.solution.VehicleRoutingProblemSolution;
+import problem.solution.route.VehicleRoute;
+import problem.solution.route.activity.TourActivity;
+import problem.vehicle.Vehicle;
+
 import util.Coordinate;
 import util.Locations;
-import basics.Delivery;
-import basics.Job;
-import basics.Pickup;
-import basics.Service;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblemSolution;
-import basics.route.TourActivity;
-import basics.route.Vehicle;
-import basics.route.VehicleRoute;
 
 public class Plotter {
 	

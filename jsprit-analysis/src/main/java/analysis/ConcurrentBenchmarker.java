@@ -29,21 +29,27 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import problem.VehicleRoutingProblem;
+import problem.solution.VehicleRoutingProblemSolution;
+
 import util.BenchmarkInstance;
 import util.BenchmarkResult;
 import util.BenchmarkWriter;
 import util.Solutions;
-import algorithms.VehicleRoutingAlgorithms;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblemSolution;
-import basics.algo.VehicleRoutingAlgorithmFactory;
-import basics.algo.VehicleRoutingAlgorithmListeners.Priority;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.VehicleRoutingAlgorithmFactory;
+import algorithm.io.VehicleRoutingAlgorithms;
+import algorithm.listener.VehicleRoutingAlgorithmListeners.Priority;
 
 public class ConcurrentBenchmarker {
 	
 	public static interface Cost {
 		public double getCost(VehicleRoutingProblemSolution sol);
+	}
+	
+	public static interface BenchmarkRunListener {
+		public void informStart(int run, BenchmarkInstance instance);
+		public void informEnd(BenchmarkInstance instance, VehicleRoutingProblemSolution sol);
 	}
 	
 	
@@ -71,6 +77,15 @@ public class ConcurrentBenchmarker {
 	
 	public void setCost(Cost cost){ this.cost = cost; }
 	
+	private List<BenchmarkRunListener> runListeners = new ArrayList<ConcurrentBenchmarker.BenchmarkRunListener>();
+	
+	/**
+	 * @return the runListeners
+	 */
+	public List<BenchmarkRunListener> getRunListeners() {
+		return runListeners;
+	}
+
 	public ConcurrentBenchmarker(String algorithmConfig) {
 		super();
 		this.algorithmConfig = algorithmConfig;
@@ -117,16 +132,16 @@ public class ConcurrentBenchmarker {
 		ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()+1);
 		List<Future<BenchmarkResult>> futures = new ArrayList<Future<BenchmarkResult>>();
 		for(final BenchmarkInstance p : benchmarkInstances){
-			
-				Future<BenchmarkResult> futureResult = executor.submit(new Callable<BenchmarkResult>(){
+			informBenchmarkStarts(p);
+			Future<BenchmarkResult> futureResult = executor.submit(new Callable<BenchmarkResult>(){
 
-					@Override
-					public BenchmarkResult call() throws Exception {
-						return runAlgoAndGetResult(p);
-					}
+				@Override
+				public BenchmarkResult call() throws Exception {
+					return runAlgoAndGetResult(p);
+				}
 
-				});
-				futures.add(futureResult);
+			});
+			futures.add(futureResult);
 			
 		}
 		try {
@@ -149,12 +164,18 @@ public class ConcurrentBenchmarker {
 		System.out.println("done [time="+(System.currentTimeMillis()-startTime)/1000 + "sec]");
 	}
 
+	private void informBenchmarkStarts(BenchmarkInstance p) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private BenchmarkResult runAlgoAndGetResult(BenchmarkInstance p) {
 		double[] vehicles = new double[runs];
 		double[] results = new double[runs];
 		double[] times = new double[runs];
 		
 		for(int run=0;run<runs;run++){
+			informBenchmarkRunStarts(run+1,p);
 			VehicleRoutingAlgorithm vra = createAlgorithm(p);
 			StopWatch stopwatch = new StopWatch();
 			vra.getAlgorithmListeners().addListener(stopwatch,Priority.HIGH);
@@ -163,9 +184,22 @@ public class ConcurrentBenchmarker {
 			vehicles[run] = best.getRoutes().size();
 			results[run] = cost.getCost(best);
 			times[run] = stopwatch.getCompTimeInSeconds();
+			informBenchmarkRunEnds(p,best);
 		}
 		
 		return new BenchmarkResult(p, runs, results, times, vehicles);
+	}
+
+	private void informBenchmarkRunEnds(BenchmarkInstance p, VehicleRoutingProblemSolution best) {
+		for(BenchmarkRunListener l : runListeners){
+			l.informEnd(p, best);
+		}
+	}
+
+	private void informBenchmarkRunStarts(int i, BenchmarkInstance p) {
+		for(BenchmarkRunListener l : runListeners){
+			l.informStart(i, p);
+		}
 	}
 
 	private VehicleRoutingAlgorithm createAlgorithm(BenchmarkInstance p) {

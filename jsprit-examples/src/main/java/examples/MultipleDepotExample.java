@@ -20,22 +20,23 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetSize;
+import problem.io.VrpXMLReader;
+import problem.solution.VehicleRoutingProblemSolution;
+import problem.vehicle.Vehicle;
+import problem.vehicle.VehicleImpl;
+import problem.vehicle.VehicleTypeImpl;
+
 import util.Coordinate;
 import util.Solutions;
-import algorithms.VehicleRoutingAlgorithms;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.io.VehicleRoutingAlgorithms;
+import algorithm.listener.VehicleRoutingAlgorithmListeners.Priority;
 import analysis.AlgorithmSearchProgressChartListener;
 import analysis.SolutionPlotter;
 import analysis.SolutionPrinter;
 import analysis.StopWatch;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.FleetSize;
-import basics.VehicleRoutingProblemSolution;
-import basics.algo.VehicleRoutingAlgorithmListeners.Priority;
-import basics.io.VrpXMLReader;
-import basics.route.Vehicle;
-import basics.route.VehicleImpl;
-import basics.route.VehicleTypeImpl;
 
 public class MultipleDepotExample {
 

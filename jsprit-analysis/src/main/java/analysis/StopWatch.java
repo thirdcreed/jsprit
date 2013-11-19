@@ -20,11 +20,12 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblemSolution;
-import basics.algo.AlgorithmEndsListener;
-import basics.algo.AlgorithmStartsListener;
+import problem.VehicleRoutingProblem;
+import problem.solution.VehicleRoutingProblemSolution;
+
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.listener.AlgorithmEndsListener;
+import algorithm.listener.AlgorithmStartsListener;
 
 public class StopWatch implements AlgorithmStartsListener, AlgorithmEndsListener{
 	

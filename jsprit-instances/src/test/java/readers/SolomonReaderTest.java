@@ -20,10 +20,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import basics.Service;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.FleetSize;
-import basics.route.Vehicle;
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetSize;
+import problem.job.Service;
+import problem.vehicle.Vehicle;
+
 
 public class SolomonReaderTest {
 	

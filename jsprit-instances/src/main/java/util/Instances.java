@@ -26,10 +26,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import problem.VehicleRoutingProblem;
+
 import readers.ChristofidesReader;
 import readers.CordeauReader;
 import readers.SolomonReader;
-import basics.VehicleRoutingProblem;
 
 public class Instances {
 

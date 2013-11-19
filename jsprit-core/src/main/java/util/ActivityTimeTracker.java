@@ -16,10 +16,10 @@
  ******************************************************************************/
 package util;
 
-import basics.costs.ForwardTransportTime;
-import basics.route.ActivityVisitor;
-import basics.route.TourActivity;
-import basics.route.VehicleRoute;
+import problem.cost.ForwardTransportTime;
+import problem.solution.route.VehicleRoute;
+import problem.solution.route.activity.ActivityVisitor;
+import problem.solution.route.activity.TourActivity;
 
 public class ActivityTimeTracker implements ActivityVisitor{
 
@@ -42,12 +42,30 @@ public class ActivityTimeTracker implements ActivityVisitor{
 		this.transportTime = transportTime;
 	}
 
+	/**
+	 * Returns the arrTime of the activity that was visited last.
+	 * 
+	 * @return
+	 */
 	public double getActArrTime(){
 		return actArrTime;
 	}
 	
+	/**
+	 * Returns the endTime of the activity that was visited last.
+	 * 
+	 * @return
+	 */
 	public double getActEndTime(){
 		return actEndTime;
+	}
+	
+	/**
+	 * Returns the last visited activity.
+	 * 
+	 */
+	public TourActivity getLastActivity(){
+		return prevAct;
 	}
 	
 	@Override

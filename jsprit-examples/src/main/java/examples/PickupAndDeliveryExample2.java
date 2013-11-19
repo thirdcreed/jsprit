@@ -19,19 +19,20 @@ package examples;
 import java.io.File;
 import java.util.Collection;
 
-import algorithms.VehicleRoutingAlgorithms;
-import algorithms.selectors.SelectBest;
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.Constraint;
+import problem.io.VrpXMLReader;
+import problem.solution.VehicleRoutingProblemSolution;
+
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.io.VehicleRoutingAlgorithms;
+import algorithm.selector.SelectBest;
 import analysis.AlgorithmSearchProgressChartListener;
 import analysis.Plotter;
 import analysis.Plotter.Label;
 import analysis.SolutionPlotter;
 import analysis.SolutionPrinter;
 import analysis.SolutionPrinter.Print;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblemSolution;
-import basics.VehicleRoutingProblem.Constraint;
-import basics.io.VrpXMLReader;
 
 public class PickupAndDeliveryExample2 {
 	

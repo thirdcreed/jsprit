@@ -20,14 +20,14 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import basics.Job;
-import basics.Service;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblemSolution;
-import basics.algo.AlgorithmStartsListener;
-import basics.route.DriverImpl;
-import basics.route.Vehicle;
+import problem.VehicleRoutingProblem;
+import problem.driver.DriverImpl;
+import problem.job.Job;
+import problem.job.Service;
+import problem.solution.VehicleRoutingProblemSolution;
+import problem.vehicle.Vehicle;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.listener.AlgorithmStartsListener;
 
 public class VrpVerifier implements AlgorithmStartsListener{
 

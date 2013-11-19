@@ -19,23 +19,24 @@ package examples;
 import java.io.File;
 import java.util.Collection;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetSize;
+import problem.cost.VehicleRoutingTransportCosts;
+import problem.job.Service;
+import problem.solution.VehicleRoutingProblemSolution;
+import problem.vehicle.Vehicle;
+import problem.vehicle.VehicleImpl;
+import problem.vehicle.VehicleType;
+import problem.vehicle.VehicleTypeImpl;
+
 import util.Solutions;
 import util.VehicleRoutingTransportCostsMatrix;
-import algorithms.GreedySchrimpfFactory;
-import algorithms.VehicleRoutingAlgorithms;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.box.GreedySchrimpfFactory;
+import algorithm.io.VehicleRoutingAlgorithms;
 import analysis.SolutionPlotter;
 import analysis.SolutionPrinter;
 import analysis.SolutionPrinter.Print;
-import basics.Service;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.FleetSize;
-import basics.VehicleRoutingProblemSolution;
-import basics.costs.VehicleRoutingTransportCosts;
-import basics.route.Vehicle;
-import basics.route.VehicleImpl;
-import basics.route.VehicleType;
-import basics.route.VehicleTypeImpl;
 
 /**
  * Illustrates how you can use jsprit with an already compiled distance and time matrix.

@@ -21,11 +21,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import basics.VehicleRoutingProblem;
-import basics.costs.VehicleRoutingTransportCosts;
-import basics.route.Driver;
-import basics.route.Vehicle;
-import basics.route.VehicleTypeImpl.VehicleCostParams;
+import problem.VehicleRoutingProblem;
+import problem.cost.VehicleRoutingTransportCosts;
+import problem.driver.Driver;
+import problem.vehicle.Vehicle;
+import problem.vehicle.VehicleTypeImpl.VehicleCostParams;
+
 
 /**
  * CostMatrix that allows pre-compiled time and distance-matrices to be considered as {@link VehicleRoutingRoutingCosts}

@@ -21,9 +21,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.FleetComposition;
-import basics.VehicleRoutingProblem.FleetSize;
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetComposition;
+import problem.VehicleRoutingProblem.FleetSize;
+
 
 public class LuiShenReaderTest {
 	

@@ -18,7 +18,9 @@ package util;
 
 import java.util.Collection;
 
-import basics.VehicleRoutingProblemSolution;
+import problem.solution.VehicleRoutingProblemSolution;
+
+
 
 public class Solutions {
 	

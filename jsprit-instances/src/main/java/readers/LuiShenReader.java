@@ -24,18 +24,19 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetComposition;
+import problem.VehicleRoutingProblem.FleetSize;
+import problem.job.Service;
+import problem.solution.route.activity.TimeWindow;
+import problem.vehicle.Vehicle;
+import problem.vehicle.VehicleImpl;
+import problem.vehicle.VehicleType;
+import problem.vehicle.VehicleTypeImpl;
+
 import readers.LuiShenReader;
 import util.Coordinate;
 
-import basics.Service;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.FleetComposition;
-import basics.VehicleRoutingProblem.FleetSize;
-import basics.route.TimeWindow;
-import basics.route.Vehicle;
-import basics.route.VehicleImpl;
-import basics.route.VehicleType;
-import basics.route.VehicleTypeImpl;
 
 public class LuiShenReader {
 

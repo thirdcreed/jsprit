@@ -16,17 +16,24 @@
  ******************************************************************************/
 package readers;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.Builder;
+import problem.cost.VehicleRoutingTransportCosts;
+import problem.driver.Driver;
+import problem.vehicle.Vehicle;
+
 import util.CrowFlyCosts;
 import util.Locations;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.Builder;
-import basics.costs.VehicleRoutingTransportCosts;
-import basics.route.Driver;
-import basics.route.Vehicle;
 
 public class FigliozziReader {
 	
@@ -45,6 +52,11 @@ public class FigliozziReader {
 			speed = speedValues;
 			this.timeBins = timeBins;
 			crowFly = new CrowFlyCosts(locations);
+		}
+		
+		@Override
+		public String toString() {
+			return "timeDependentTransportCosts according to Figliozzi";
 		}
 			
 		@Override
@@ -71,9 +83,11 @@ public class FigliozziReader {
 			double totalTravelTime = 0.0;
 			double distanceToTravel = crowFly.getTransportCost(fromId, toId, departureTime, null, null);
 			double currentTime = departureTime;
+			double speedOfLastBin = 0.0;
 			for(int i=0;i<timeBins.size();i++){
+				speedOfLastBin = speed.get(i);
 				double timeThreshold = timeBins.get(i);
-				if(currentTime < timeThreshold){
+				if(currentTime < timeThreshold || (i==timeBins.size()-1 && currentTime <= timeThreshold)){
 					double maxReachableDistance = (timeThreshold-currentTime)*speed.get(i);
 					if(distanceToTravel > maxReachableDistance){
 						distanceToTravel = distanceToTravel - maxReachableDistance;
@@ -87,7 +101,9 @@ public class FigliozziReader {
 					}
 				}
 			}
-			return Double.MAX_VALUE;
+			assert speedOfLastBin != 0.0 : "speed cannot be 0.0";
+			totalTravelTime += distanceToTravel/speedOfLastBin;
+			return totalTravelTime;
 		}
 
 
@@ -99,7 +115,9 @@ public class FigliozziReader {
 			double totalTravelTime = 0.0;
 			double distanceToTravel = crowFly.getTransportCost(fromId, toId, arrivalTime, null, null);
 			double currentTime = arrivalTime;
+			double speedOfLastBin = 0.0;
 			for(int i=timeBins.size()-1;i>=0;i--){
+				speedOfLastBin = speed.get(i);
 				double nextLowerTimeThreshold;
 				if(i>0){
 					nextLowerTimeThreshold = timeBins.get(i-1);
@@ -107,7 +125,7 @@ public class FigliozziReader {
 				else{
 					nextLowerTimeThreshold = 0;
 				}
-				if(currentTime > nextLowerTimeThreshold){
+				if(currentTime > nextLowerTimeThreshold || (i==0 && currentTime >= nextLowerTimeThreshold)){
 					double maxReachableDistance = (currentTime - nextLowerTimeThreshold)*speed.get(i);
 					if(distanceToTravel > maxReachableDistance){
 						distanceToTravel = distanceToTravel - maxReachableDistance;
@@ -121,23 +139,78 @@ public class FigliozziReader {
 					}
 				}
 			}
-			return Double.MAX_VALUE;
+			assert speedOfLastBin != 0.0 : "speed cannot be 0.0";
+			totalTravelTime += distanceToTravel/speedOfLastBin;
+			return totalTravelTime;
 		}
-
-		
-
 	}
 	
 	private VehicleRoutingProblem.Builder builder;
+	private double fixCostsPerVehicle;
 
 	public FigliozziReader(Builder builder) {
 		super();
 		this.builder = builder;
 	}
 	
-	public void read(String instanceFile, String speedScenarioFile, String speedScenario){
+	public void read(String solomonFile, String speedScenarioFile, String speedScenario){
+		SolomonReader solomonReader = new SolomonReader(builder,fixCostsPerVehicle);
+		solomonReader.read(solomonFile);
+		double depotClosingTime = getDepotClosingTime();
+		readAndCreateTransportCostsFunction(speedScenarioFile,speedScenario,depotClosingTime);
+	}
+
+	private double getDepotClosingTime() {
+		assert builder.getAddedVehicles().size() == 1 : "strange. there should only be one solomon-vehicle";
+		Vehicle v = builder.getAddedVehicles().iterator().next();
+		return v.getLatestArrival();
+	}
+
+	private void readAndCreateTransportCostsFunction(String speedScenarioFile, String speedScenario, double depotClosingTime) {
+		List<Double> timeBins = new ArrayList<Double>();
+		timeBins.add(0.2*depotClosingTime);
+		timeBins.add(0.4*depotClosingTime);
+		timeBins.add(0.6*depotClosingTime);
+		timeBins.add(0.8*depotClosingTime);
+		timeBins.add(1.0*depotClosingTime);
 		
+		List<Double> speedValues = new ArrayList<Double>();
+		readTravelTimeDistribution(speedScenarioFile,speedScenario,speedValues);
 		
+		TDCosts tdcosts = new TDCosts(builder.getLocations(), timeBins, speedValues);
+		builder.setRoutingCost(tdcosts);
+	}
+
+	private void readTravelTimeDistribution(String speedScenarioFile, String speedScenario, List<Double> speedValues) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File(speedScenarioFile)));
+			String line = null;
+			while((line = reader.readLine()) != null){
+				line = line.replace("\r", "");
+				line = line.trim();
+				String[] tokens = line.split("\t");
+				assert tokens.length == 6 : "could not read file correctly";
+				String speedScen = tokens[0];
+				if(speedScen.equals(speedScenario)){
+					for(int i=1;i<6;i++){
+						speedValues.add(Double.parseDouble(tokens[i]));
+					}
+				}
+			}
+			reader.close();
+			assert speedValues.size() == 5 : "could not read speed-values correctly"; 
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void setFixCostsPerVehicle(double fix) {
+		this.fixCostsPerVehicle=fix;
 	}
 	
 

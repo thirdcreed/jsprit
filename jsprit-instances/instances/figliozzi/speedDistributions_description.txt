@@ -1,0 +1,16 @@
+Based on:
+Miguel Andres Figliozzi, The time dependent vehicle routing problem with time windows: Benchmark problems, an efficient solution algorithm, and solution characteristics, Transportation Research Part E: Logistics and Transportation Review, Volume 48, Issue 3, May 2012, Pages 616-636, ISSN 1366-5545, http://dx.doi.org/10.1016/j.tre.2011.11.006.
+(http://www.sciencedirect.com/science/article/pii/S1366554511001426)
+
+The depot working time [e, l] is divided into five time periods of equal durations:
+[0, 0.2l); [0.2l, 0.4l); [0.4l, 0.6l); [0.6l, 0.8l); and [0.8l, l].
+
+column1	scenario_name (see paper above for scenario descriptions)
+column2	speed in [0, 0.2l)
+column3 speed in [0.2l, 0.4l)
+column4 speed in [0.4l, 0.6l)
+column5 speed in [0.6l, 0.8l)
+column6 speed in [0.8l, l]
+
+columns seperated by '\t'
+speed figures are relative to the speed figures in the original solomon case, i.e. euclidean distance.

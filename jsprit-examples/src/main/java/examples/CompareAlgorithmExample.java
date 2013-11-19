@@ -18,14 +18,15 @@ package examples;
 
 import java.io.File;
 
+import problem.VehicleRoutingProblem;
+
 import readers.SolomonReader;
-import algorithms.GreedySchrimpfFactory;
-import algorithms.SchrimpfFactory;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.box.GreedySchrimpfFactory;
+import algorithm.box.SchrimpfFactory;
+import algorithm.listener.VehicleRoutingAlgorithmListeners.Priority;
 import analysis.AlgorithmSearchProgressChartListener;
 import analysis.StopWatch;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.algo.VehicleRoutingAlgorithmListeners.Priority;
 
 public class CompareAlgorithmExample {
 

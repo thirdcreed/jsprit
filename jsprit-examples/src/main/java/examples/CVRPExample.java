@@ -16,9 +16,9 @@
  ******************************************************************************/
 package examples;
 
+import problem.VehicleRoutingProblem;
+import problem.io.VrpXMLWriter;
 import readers.ChristofidesReader;
-import basics.VehicleRoutingProblem;
-import basics.io.VrpXMLWriter;
 
 public class CVRPExample {
 	

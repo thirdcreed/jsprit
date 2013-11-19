@@ -24,17 +24,18 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetSize;
+import problem.job.Service;
+import problem.solution.route.activity.TimeWindow;
+import problem.vehicle.Vehicle;
+import problem.vehicle.VehicleImpl;
+import problem.vehicle.VehicleType;
+import problem.vehicle.VehicleTypeImpl;
+
 import readers.SolomonReader;
 import util.Coordinate;
 
-import basics.route.TimeWindow;
-import basics.route.Vehicle;
-import basics.route.VehicleImpl;
-import basics.route.VehicleType;
-import basics.route.VehicleTypeImpl;
-import basics.Service;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.FleetSize;
 
 /**
  * Reader that reads the well-known solomon-instances.
@@ -170,4 +171,5 @@ public class SolomonReader {
 		this.timeProjectionFactor=timeProjection;
 		
 	}
+
 }

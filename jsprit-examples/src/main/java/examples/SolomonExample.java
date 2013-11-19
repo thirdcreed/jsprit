@@ -19,15 +19,16 @@ package examples;
 import java.io.File;
 import java.util.Collection;
 
+import problem.VehicleRoutingProblem;
+import problem.solution.VehicleRoutingProblemSolution;
+
 import readers.SolomonReader;
-import algorithms.VehicleRoutingAlgorithms;
-import algorithms.selectors.SelectBest;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.io.VehicleRoutingAlgorithms;
+import algorithm.selector.SelectBest;
 import analysis.SolutionPlotter;
 import analysis.SolutionPrinter;
 import analysis.SolutionPrinter.Print;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblemSolution;
 
 public class SolomonExample {
 	

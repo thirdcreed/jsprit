@@ -16,9 +16,9 @@
  ******************************************************************************/
 package analysis;
 
-import basics.VehicleRoutingProblemSolution;
-import basics.route.DefaultVehicleRouteCostCalculator;
-import basics.route.VehicleRoute;
+import problem.solution.VehicleRoutingProblemSolution;
+import problem.solution.route.DefaultVehicleRouteCostCalculator;
+import problem.solution.route.VehicleRoute;
 
 /**
  * Printer to print the details of a vehicle-routing-problem solution.

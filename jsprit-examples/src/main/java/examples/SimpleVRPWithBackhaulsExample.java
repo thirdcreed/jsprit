@@ -19,27 +19,28 @@ package examples;
 import java.io.File;
 import java.util.Collection;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.Constraint;
+import problem.io.VrpXMLWriter;
+import problem.job.Delivery;
+import problem.job.Pickup;
+import problem.job.Service;
+import problem.solution.VehicleRoutingProblemSolution;
+import problem.vehicle.Vehicle;
+import problem.vehicle.VehicleImpl;
+import problem.vehicle.VehicleType;
+import problem.vehicle.VehicleTypeImpl;
+import problem.vehicle.VehicleImpl.Builder;
+
 import util.Coordinate;
 import util.Solutions;
-import algorithms.SchrimpfFactory;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.box.SchrimpfFactory;
 import analysis.Plotter;
 import analysis.SolutionPlotter;
 import analysis.SolutionPrinter;
 import analysis.Plotter.Label;
 import analysis.SolutionPrinter.Print;
-import basics.Delivery;
-import basics.Pickup;
-import basics.Service;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.Constraint;
-import basics.VehicleRoutingProblemSolution;
-import basics.io.VrpXMLWriter;
-import basics.route.Vehicle;
-import basics.route.VehicleImpl;
-import basics.route.VehicleImpl.Builder;
-import basics.route.VehicleType;
-import basics.route.VehicleTypeImpl;
 
 public class SimpleVRPWithBackhaulsExample {
 	

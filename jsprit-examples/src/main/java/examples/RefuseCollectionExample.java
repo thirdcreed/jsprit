@@ -25,23 +25,24 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import problem.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem.FleetSize;
+import problem.cost.VehicleRoutingTransportCosts;
+import problem.driver.Driver;
+import problem.io.VrpXMLWriter;
+import problem.job.Service;
+import problem.solution.VehicleRoutingProblemSolution;
+import problem.vehicle.Vehicle;
+import problem.vehicle.VehicleImpl;
+import problem.vehicle.VehicleTypeImpl;
+
 import util.Solutions;
 import util.VehicleRoutingTransportCostsMatrix;
 import util.VehicleRoutingTransportCostsMatrix.Builder;
-import algorithms.GreedySchrimpfFactory;
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.box.GreedySchrimpfFactory;
 import analysis.SolutionPrinter;
 import analysis.SolutionPrinter.Print;
-import basics.Service;
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblem.FleetSize;
-import basics.VehicleRoutingProblemSolution;
-import basics.costs.VehicleRoutingTransportCosts;
-import basics.io.VrpXMLWriter;
-import basics.route.Driver;
-import basics.route.Vehicle;
-import basics.route.VehicleImpl;
-import basics.route.VehicleTypeImpl;
 
 
 /**

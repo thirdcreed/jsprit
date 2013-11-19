@@ -18,9 +18,9 @@ package util;
 
 
 
-import basics.costs.VehicleRoutingTransportCosts;
-import basics.route.Driver;
-import basics.route.Vehicle;
+import problem.cost.VehicleRoutingTransportCosts;
+import problem.driver.Driver;
+import problem.vehicle.Vehicle;
 
 /**
  * 

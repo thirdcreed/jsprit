@@ -34,12 +34,13 @@ import org.jfree.data.Range;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import basics.VehicleRoutingAlgorithm;
-import basics.VehicleRoutingProblem;
-import basics.VehicleRoutingProblemSolution;
-import basics.algo.AlgorithmEndsListener;
-import basics.algo.AlgorithmStartsListener;
-import basics.algo.IterationEndsListener;
+import problem.VehicleRoutingProblem;
+import problem.solution.VehicleRoutingProblemSolution;
+
+import algorithm.VehicleRoutingAlgorithm;
+import algorithm.listener.AlgorithmEndsListener;
+import algorithm.listener.AlgorithmStartsListener;
+import algorithm.listener.IterationEndsListener;
 
 
 /**

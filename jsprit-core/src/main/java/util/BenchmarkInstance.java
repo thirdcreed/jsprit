@@ -16,7 +16,7 @@
  ******************************************************************************/
 package util;
 
-import basics.VehicleRoutingProblem;
+import problem.VehicleRoutingProblem;
 
 public class BenchmarkInstance {
 	public final String name;
