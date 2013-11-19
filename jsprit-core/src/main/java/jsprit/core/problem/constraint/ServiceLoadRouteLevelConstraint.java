@@ -1,0 +1,42 @@
+package jsprit.core.problem.constraint;
+
+import jsprit.core.algorithm.recreate.InsertionContext;
+import jsprit.core.algorithm.state.StateFactory;
+import jsprit.core.algorithm.state.StateGetter;
+import jsprit.core.problem.job.Delivery;
+import jsprit.core.problem.job.Pickup;
+import jsprit.core.problem.job.Service;
+
+/**
+ * lsjdfjsdlfjsa
+ * 
+ * @author stefan
+ *
+ */
+class ServiceLoadRouteLevelConstraint implements HardRouteStateLevelConstraint {
+
+	private StateGetter stateManager;
+	
+	public ServiceLoadRouteLevelConstraint(StateGetter stateManager) {
+		super();
+		this.stateManager = stateManager;
+	}
+
+	@Override
+	public boolean fulfilled(InsertionContext insertionContext) {
+		if(insertionContext.getJob() instanceof Delivery){
+			int loadAtDepot = (int) stateManager.getRouteState(insertionContext.getRoute(), StateFactory.LOAD_AT_BEGINNING).toDouble();
+			if(loadAtDepot + insertionContext.getJob().getCapacityDemand() > insertionContext.getNewVehicle().getCapacity()){
+				return false;
+			}
+		}
+		else if(insertionContext.getJob() instanceof Pickup || insertionContext.getJob() instanceof Service){
+			int loadAtEnd = (int) stateManager.getRouteState(insertionContext.getRoute(), StateFactory.LOAD_AT_END).toDouble();
+			if(loadAtEnd + insertionContext.getJob().getCapacityDemand() > insertionContext.getNewVehicle().getCapacity()){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+}
