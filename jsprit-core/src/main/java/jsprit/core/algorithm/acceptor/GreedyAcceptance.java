@@ -24,11 +24,11 @@ import jsprit.core.problem.solution.VehicleRoutingProblemSolution;
 
 
 
-public class AcceptNewIfBetterThanWorst implements SolutionAcceptor{
+public class GreedyAcceptance implements SolutionAcceptor{
 
 	private final int solutionMemory;
 	
-	public AcceptNewIfBetterThanWorst(int solutionMemory){
+	public GreedyAcceptance(int solutionMemory){
 		this.solutionMemory = solutionMemory;
 	}
 	

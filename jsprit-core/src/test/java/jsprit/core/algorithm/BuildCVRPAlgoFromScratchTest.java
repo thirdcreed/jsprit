@@ -24,7 +24,7 @@ import jsprit.core.algorithm.RemoveEmptyVehicles;
 import jsprit.core.algorithm.SearchStrategy;
 import jsprit.core.algorithm.SearchStrategyManager;
 import jsprit.core.algorithm.VehicleRoutingAlgorithm;
-import jsprit.core.algorithm.acceptor.AcceptNewIfBetterThanWorst;
+import jsprit.core.algorithm.acceptor.GreedyAcceptance;
 import jsprit.core.algorithm.modules.RuinAndRecreateModule;
 import jsprit.core.algorithm.recreate.BestInsertionBuilder;
 import jsprit.core.algorithm.recreate.InsertionContext;
@@ -96,11 +96,11 @@ public class BuildCVRPAlgoFromScratchTest {
 			}
 		};
 		
-		SearchStrategy randomStrategy = new SearchStrategy(new SelectBest(), new AcceptNewIfBetterThanWorst(1), solutionCostCalculator);
+		SearchStrategy randomStrategy = new SearchStrategy(new SelectBest(), new GreedyAcceptance(1), solutionCostCalculator);
 		RuinAndRecreateModule randomModule = new RuinAndRecreateModule("randomRuin_bestInsertion", bestInsertion, random);
 		randomStrategy.addModule(randomModule);
 		
-		SearchStrategy radialStrategy = new SearchStrategy(new SelectBest(), new AcceptNewIfBetterThanWorst(1), solutionCostCalculator);
+		SearchStrategy radialStrategy = new SearchStrategy(new SelectBest(), new GreedyAcceptance(1), solutionCostCalculator);
 		RuinAndRecreateModule radialModule = new RuinAndRecreateModule("radialRuin_bestInsertion", bestInsertion, radial);
 		radialStrategy.addModule(radialModule);
 		

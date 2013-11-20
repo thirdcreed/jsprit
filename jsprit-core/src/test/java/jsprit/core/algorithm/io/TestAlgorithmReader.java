@@ -25,7 +25,7 @@ import java.util.Collection;
 import jsprit.core.algorithm.SearchStrategy;
 import jsprit.core.algorithm.SearchStrategyModule;
 import jsprit.core.algorithm.VehicleRoutingAlgorithm;
-import jsprit.core.algorithm.acceptor.AcceptNewIfBetterThanWorst;
+import jsprit.core.algorithm.acceptor.GreedyAcceptance;
 import jsprit.core.algorithm.acceptor.SolutionAcceptor;
 import jsprit.core.algorithm.io.VehicleRoutingAlgorithms;
 import jsprit.core.algorithm.io.VehicleRoutingAlgorithms.ModKey;
@@ -78,7 +78,7 @@ public class TestAlgorithmReader {
 		ModKey key = new ModKey(acceptorName,acceptorId);
 		AcceptorKey accKey = new AcceptorKey(key);
 		
-		SolutionAcceptor acceptor = new AcceptNewIfBetterThanWorst(1);
+		SolutionAcceptor acceptor = new GreedyAcceptance(1);
 		
 		typedMap.put(accKey, acceptor);
 		
@@ -98,7 +98,7 @@ public class TestAlgorithmReader {
 		
 		ModKey key = new ModKey(acceptorName,acceptorId);
 		AcceptorKey accKey = new AcceptorKey(key);
-		SolutionAcceptor acceptor =  new AcceptNewIfBetterThanWorst(1);
+		SolutionAcceptor acceptor =  new GreedyAcceptance(1);
 		
 		SelectorKey selKey = new SelectorKey(new ModKey(selectorName,selectorId));
 		SolutionSelector selector = new SelectBest();
@@ -125,13 +125,13 @@ public class TestAlgorithmReader {
 		
 		ModKey key = new ModKey(acceptorName,acceptorId);
 		AcceptorKey accKey = new AcceptorKey(key);
-		SolutionAcceptor acceptor =  new AcceptNewIfBetterThanWorst(1);
+		SolutionAcceptor acceptor =  new GreedyAcceptance(1);
 		
 		SelectorKey selKey = new SelectorKey(new ModKey(selectorName,selectorId));
 		SolutionSelector selector = new SelectBest();
 		
 		AcceptorKey accKey2 = new AcceptorKey(new ModKey(acceptorName2,acceptorId2));
-		SolutionAcceptor acceptor2 =  new AcceptNewIfBetterThanWorst(1);
+		SolutionAcceptor acceptor2 =  new GreedyAcceptance(1);
 		
 		typedMap.put(accKey, acceptor);
 		typedMap.put(selKey, selector);

@@ -30,12 +30,11 @@ import java.util.concurrent.ExecutorService;
 import jsprit.core.algorithm.RemoveEmptyVehicles;
 import jsprit.core.algorithm.ResetAndIniFleetManager;
 import jsprit.core.algorithm.SearchStrategy;
+import jsprit.core.algorithm.SearchStrategy.DiscoveredSolution;
 import jsprit.core.algorithm.SearchStrategyManager;
 import jsprit.core.algorithm.SearchStrategyModule;
 import jsprit.core.algorithm.VehicleRoutingAlgorithm;
-import jsprit.core.algorithm.SearchStrategy.DiscoveredSolution;
-import jsprit.core.algorithm.acceptor.AcceptNewIfBetterThanWorst;
-import jsprit.core.algorithm.acceptor.AcceptNewRemoveFirst;
+import jsprit.core.algorithm.acceptor.GreedyAcceptance;
 import jsprit.core.algorithm.acceptor.SchrimpfAcceptance;
 import jsprit.core.algorithm.acceptor.SolutionAcceptor;
 import jsprit.core.algorithm.io.VehicleRoutingAlgorithms.TypedMap.AbstractKey;
@@ -703,12 +702,7 @@ public class VehicleRoutingAlgorithms {
 		SolutionAcceptor definedAcceptor = typedMap.get(acceptorKey);
 		if(definedAcceptor != null) return definedAcceptor; 
 		if(acceptorName.equals("acceptNewRemoveWorst")){
-			AcceptNewIfBetterThanWorst acceptor = new AcceptNewIfBetterThanWorst(solutionMemory);
-			typedMap.put(acceptorKey, acceptor);
-			return acceptor;
-		}
-		if(acceptorName.equals("acceptNewRemoveFirst")){
-			AcceptNewRemoveFirst acceptor = new AcceptNewRemoveFirst(solutionMemory);
+			GreedyAcceptance acceptor = new GreedyAcceptance(solutionMemory);
 			typedMap.put(acceptorKey, acceptor);
 			return acceptor;
 		}

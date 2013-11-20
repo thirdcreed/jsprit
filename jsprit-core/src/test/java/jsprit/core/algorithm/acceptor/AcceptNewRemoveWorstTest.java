@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import jsprit.core.algorithm.acceptor.AcceptNewIfBetterThanWorst;
+import jsprit.core.algorithm.acceptor.GreedyAcceptance;
 import jsprit.core.problem.VehicleRoutingProblem;
 import jsprit.core.problem.solution.VehicleRoutingProblemSolution;
 
@@ -51,7 +51,7 @@ public class AcceptNewRemoveWorstTest {
 		
 		VehicleRoutingProblemSolution sol3 = mock(VehicleRoutingProblemSolution.class);
 		
-		new AcceptNewIfBetterThanWorst(2).acceptSolution(solList, sol3);
+		new GreedyAcceptance(2).acceptSolution(solList, sol3);
 		
 		assertEquals(2,solList.size());
 		assertThat(sol3,is(solList.get(1)));
