@@ -43,9 +43,9 @@ import org.apache.log4j.Logger;
  * @author stefan
  *
  */
-public class VariationCoefficientBreaker implements PrematureAlgorithmBreaker, IterationStartsListener, AlgorithmStartsListener, IterationEndsListener{
+public class VariationCoefficientTermination implements PrematureAlgorithmTermination, IterationStartsListener, AlgorithmStartsListener, IterationEndsListener{
 
-	private static Logger logger = Logger.getLogger(VariationCoefficientBreaker.class);
+	private static Logger logger = Logger.getLogger(VariationCoefficientTermination.class);
 	
 	private int nuOfIterations;
 	
@@ -67,7 +67,7 @@ public class VariationCoefficientBreaker implements PrematureAlgorithmBreaker, I
 	 * @author stefan
 	 *
 	 */
-	public VariationCoefficientBreaker(int nuOfIterations, double variationCoefficientThreshold) {
+	public VariationCoefficientTermination(int nuOfIterations, double variationCoefficientThreshold) {
 		super();
 		this.nuOfIterations = nuOfIterations;
 		this.variationCoefficientThreshold = variationCoefficientThreshold;

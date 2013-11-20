@@ -37,9 +37,9 @@ import org.apache.log4j.Logger;
  * @author stefan
  *
  */
-public class TimeBreaker implements PrematureAlgorithmBreaker, AlgorithmStartsListener{
+public class TimeTermination implements PrematureAlgorithmTermination, AlgorithmStartsListener{
 
-	private static Logger logger = Logger.getLogger(TimeBreaker.class);
+	private static Logger logger = Logger.getLogger(TimeTermination.class);
 	
 	private double timeThreshold;
 	
@@ -54,7 +54,7 @@ public class TimeBreaker implements PrematureAlgorithmBreaker, AlgorithmStartsLi
 	 * @author stefan
 	 *
 	 */
-	public TimeBreaker(double time_in_seconds) {
+	public TimeTermination(double time_in_seconds) {
 		super();
 		this.timeThreshold = time_in_seconds;
 		logger.info("initialise " + this);

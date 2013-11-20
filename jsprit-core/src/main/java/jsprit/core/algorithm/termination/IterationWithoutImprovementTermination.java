@@ -18,8 +18,37 @@ package jsprit.core.algorithm.termination;
 
 import jsprit.core.algorithm.SearchStrategy.DiscoveredSolution;
 
-public interface PrematureAlgorithmBreaker {
-	
-	public boolean isPrematureBreak(DiscoveredSolution discoveredSolution);
+import org.apache.log4j.Logger;
 
+
+
+public class IterationWithoutImprovementTermination implements PrematureAlgorithmTermination{
+
+	private static Logger log = Logger.getLogger(IterationWithoutImprovementTermination.class);
+	
+	private int nuOfIterationWithoutImprovement;
+	
+	private int iterationsWithoutImprovement = 0;
+	
+	public IterationWithoutImprovementTermination(int nuOfIterationsWithoutImprovement){
+		this.nuOfIterationWithoutImprovement=nuOfIterationsWithoutImprovement;
+		log.info("initialise " + this);
+	}
+	
+	@Override
+	public String toString() {
+		return "[name=IterationWithoutImprovementBreaker][iterationsWithoutImprovement="+nuOfIterationWithoutImprovement+"]";
+	}
+	
+	@Override
+	public boolean isPrematureBreak(DiscoveredSolution discoveredSolution) {
+		if(discoveredSolution.isAccepted()) iterationsWithoutImprovement = 0;
+		else iterationsWithoutImprovement++;
+		if(iterationsWithoutImprovement > nuOfIterationWithoutImprovement){
+			return true;
+		}
+		return false;
+	}
+
+	
 }

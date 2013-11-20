@@ -27,8 +27,8 @@ import jsprit.core.algorithm.listener.IterationEndsListener;
 import jsprit.core.algorithm.listener.IterationStartsListener;
 import jsprit.core.algorithm.listener.VehicleRoutingAlgorithmListener;
 import jsprit.core.algorithm.listener.VehicleRoutingAlgorithmListeners;
-import jsprit.core.algorithm.termination.IterationWithoutImprovementBreaker;
-import jsprit.core.algorithm.termination.PrematureAlgorithmBreaker;
+import jsprit.core.algorithm.termination.IterationWithoutImprovementTermination;
+import jsprit.core.algorithm.termination.PrematureAlgorithmTermination;
 import jsprit.core.problem.VehicleRoutingProblem;
 import jsprit.core.problem.solution.VehicleRoutingProblemSolution;
 import jsprit.core.util.Counter;
@@ -63,7 +63,7 @@ public class VehicleRoutingAlgorithm {
 	
 	private Collection<VehicleRoutingProblemSolution> initialSolutions;
 	
-	private PrematureAlgorithmBreaker prematureAlgorithmBreaker = new PrematureAlgorithmBreaker() {
+	private PrematureAlgorithmTermination prematureAlgorithmTermination = new PrematureAlgorithmTermination() {
 		
 		@Override
 		public boolean isPrematureBreak(DiscoveredSolution discoveredSolution) {
@@ -105,12 +105,14 @@ public class VehicleRoutingAlgorithm {
 	 * 
 	 * @param nuIterationsWithoutImprovement
 	 */
+	@Deprecated
 	public void setPrematureBreak(int nuIterationsWithoutImprovement){
-		prematureAlgorithmBreaker = new IterationWithoutImprovementBreaker(nuIterationsWithoutImprovement);
+		prematureAlgorithmTermination = new IterationWithoutImprovementTermination(nuIterationsWithoutImprovement);
 	}
 	
-	public void setPrematureAlgorithmBreaker(PrematureAlgorithmBreaker prematureAlgorithmBreaker){
-		this.prematureAlgorithmBreaker = prematureAlgorithmBreaker;
+	
+	public void setPrematureAlgorithmTermination(PrematureAlgorithmTermination prematureAlgorithmTermination){
+		this.prematureAlgorithmTermination = prematureAlgorithmTermination;
 	}
 
 	/**
@@ -148,7 +150,7 @@ public class VehicleRoutingAlgorithm {
 			SearchStrategy strategy = searchStrategyManager.getRandomStrategy();
 			DiscoveredSolution discoveredSolution = strategy.run(problem, solutions);
 //			selectedStrategy(strategy.getName(),problem, solutions);
-			if(prematureAlgorithmBreaker.isPrematureBreak(discoveredSolution)){
+			if(prematureAlgorithmTermination.isPrematureBreak(discoveredSolution)){
 				logger.info("premature break at iteration "+ (i+1));
 				nuOfIterationsThisAlgoIsRunning = (i+1);
 				break;

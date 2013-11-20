@@ -66,10 +66,10 @@ import jsprit.core.algorithm.state.StateFactory;
 import jsprit.core.algorithm.state.StateManager;
 import jsprit.core.algorithm.state.UpdateActivityTimes;
 import jsprit.core.algorithm.state.UpdateVariableCosts;
-import jsprit.core.algorithm.termination.IterationWithoutImprovementBreaker;
-import jsprit.core.algorithm.termination.PrematureAlgorithmBreaker;
-import jsprit.core.algorithm.termination.TimeBreaker;
-import jsprit.core.algorithm.termination.VariationCoefficientBreaker;
+import jsprit.core.algorithm.termination.IterationWithoutImprovementTermination;
+import jsprit.core.algorithm.termination.PrematureAlgorithmTermination;
+import jsprit.core.algorithm.termination.TimeTermination;
+import jsprit.core.algorithm.termination.VariationCoefficientTermination;
 import jsprit.core.problem.VehicleRoutingProblem;
 import jsprit.core.problem.VehicleRoutingProblem.FleetSize;
 import jsprit.core.problem.constraint.ConstraintManager;
@@ -517,8 +517,8 @@ public class VehicleRoutingAlgorithms {
 		metaAlgorithm.getSearchStrategyManager().addSearchStrategyModuleListener(new VehicleSwitched(vehicleFleetManager));
 		
 		//define prematureBreak
-		PrematureAlgorithmBreaker prematureAlgoBreaker = getPrematureBreaker(config,algorithmListeners);
-		metaAlgorithm.setPrematureAlgorithmBreaker(prematureAlgoBreaker);
+		PrematureAlgorithmTermination prematureAlgoBreaker = getPrematureBreaker(config,algorithmListeners);
+		metaAlgorithm.setPrematureAlgorithmTermination(prematureAlgoBreaker);
 		
 		//misc
 		algorithmListeners.add(new PrioritizedVRAListener(Priority.LOW, new SolutionVerifier()));
@@ -562,11 +562,11 @@ public class VehicleRoutingAlgorithms {
 				"makes sure your config file contains one of these options");
 	}
 
-	private static PrematureAlgorithmBreaker getPrematureBreaker(XMLConfiguration config, Set<PrioritizedVRAListener> algorithmListeners) {
+	private static PrematureAlgorithmTermination getPrematureBreaker(XMLConfiguration config, Set<PrioritizedVRAListener> algorithmListeners) {
 		String basedOn = config.getString("prematureBreak[@basedOn]");
 		if(basedOn == null){
 			log.info("set default prematureBreak, i.e. no premature break at all.");
-			return new PrematureAlgorithmBreaker() {
+			return new PrematureAlgorithmTermination() {
 
 				@Override
 				public boolean isPrematureBreak(DiscoveredSolution discoveredSolution) {
@@ -579,14 +579,14 @@ public class VehicleRoutingAlgorithms {
 			String iter = config.getString("prematureBreak.iterations");
 			if(iter == null) throw new IllegalStateException("prematureBreak.iterations is missing");
 			int iterations = Integer.valueOf(iter);
-			return new IterationWithoutImprovementBreaker(iterations);
+			return new IterationWithoutImprovementTermination(iterations);
 		}
 		if(basedOn.equals("time")){
 			log.info("set prematureBreak based on time");
 			String timeString = config.getString("prematureBreak.time");
 			if(timeString == null) throw new IllegalStateException("prematureBreak.time is missing");
 			double time = Double.valueOf(timeString);
-			TimeBreaker timeBreaker = new TimeBreaker(time);
+			TimeTermination timeBreaker = new TimeTermination(time);
 			algorithmListeners.add(new PrioritizedVRAListener(Priority.LOW, timeBreaker));
 			return timeBreaker;
 		}
@@ -598,7 +598,7 @@ public class VehicleRoutingAlgorithms {
 			if(iterationsString == null) throw new IllegalStateException("prematureBreak.iterations is missing");
 			double threshold = Double.valueOf(thresholdString);
 			int iterations = Integer.valueOf(iterationsString);
-			VariationCoefficientBreaker variationCoefficientBreaker = new VariationCoefficientBreaker(iterations, threshold);
+			VariationCoefficientTermination variationCoefficientBreaker = new VariationCoefficientTermination(iterations, threshold);
 			algorithmListeners.add(new PrioritizedVRAListener(Priority.LOW, variationCoefficientBreaker));
 			return variationCoefficientBreaker;
 		}
